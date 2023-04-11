@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"sdl.h": "c",
+		"_structs.h": "c",
+		"core.h": "c",
+		"mouvement.h": "c"
+	}
+}
