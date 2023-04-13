@@ -8,6 +8,8 @@
 #define WINDOW_WIDTH 640*2
 #define WINDOW_HEIGHT 480*2
 
+#define JUMP_FORCE 25.0
+
 
 // Global Includes
 // Those will be imported on almost all .h

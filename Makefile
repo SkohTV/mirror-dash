@@ -8,7 +8,8 @@ CFLAGS = -Wall -Wextra -Wpedantic -g
 LINKS = -lSDL2 -lSDL2_image #-lm
 # Files
 OBJECTS_DIR = obj
-SRC_DIR = primitives
+SRC_DIR1 = primitives
+SRC_DIR2 = interfaces
 SRCS = $(filter-out $(SRC_DIR)/_structs.h, $(wildcard $(SRC_DIR)/*.c))
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJECTS_DIR)/%.o,$(SRCS))
 #! DON'T TOUCH
@@ -25,7 +26,9 @@ OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJECTS_DIR)/%.o,$(SRCS))
 all: $(TARGET)
 $(TARGET): $(OBJS) main.c
 	$(CC) $(CFLAGS) $^ -o $@ $(LINKS)
-$(OBJECTS_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJECTS_DIR)
+$(OBJECTS_DIR)/%.o: $(SRC_DIR2)/%.c | $(OBJECTS_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(LINKS)
+$(OBJECTS_DIR)/%.o: $(SRC_DIR1)/%.c | $(OBJECTS_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@ $(LINKS)
 $(OBJECTS_DIR):
 	mkdir -p $(OBJECTS_DIR)

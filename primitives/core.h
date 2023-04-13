@@ -51,19 +51,20 @@ int freeWindow(SDL_Window *window, SDL_Renderer *renderer);
 void loadImage(SDL_Renderer *renderer, char shape, int X, int Y);
 
 /**
- * @brief Handle any key press nor click
- * 
- * @param renderer 
- */
-void eventHandler(SDL_Renderer *renderer);
-
-/**
  * @brief Return the plus or minus to the X position of the cube
  * 
  * @param accelerate 
  * @return int 
  */
 int jumpTrajectory(float *accelerate);
+
+/**
+ * @brief Set the Window Fullscreen object
+ * 
+ * @param window 
+ * @return int 
+ */
+int setWindowFullscreen(SDL_Window **window);
 
 
 

@@ -18,12 +18,10 @@ int closeSDL(){
 
 
 int createWindow(SDL_Window **window, SDL_Renderer **renderer){
-	if(SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN, window, renderer) != 0){
+	if(SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_FULLSCREEN, window, renderer) != 0){
 		fprintf(stderr, "Erreur SDL_CreateWindowAndRenderer : %s", SDL_GetError());
 		return EXIT_FAILURE;
-	} else{
-		return EXIT_SUCCESS;
-	}
+	} else { return EXIT_SUCCESS; }
 }
 
 
@@ -78,31 +76,15 @@ void loadImage(SDL_Renderer *renderer, char shape, int X, int Y){
 }
 
 
-void eventHandler(SDL_Renderer *renderer){
-	int continuer = 1;
-	SDL_Event event;
-	while (continuer) {
-		SDL_WaitEvent (&event); // attente d'un évènement
-		float start = 25.0;
-		int XPosition = WINDOW_WIDTH/2;
-		int YPosition = WINDOW_HEIGHT/2;
-		switch (event.type) {
-			case SDL_QUIT :
-				continuer = 0;
-				break;
-			case SDL_MOUSEBUTTONDOWN :
-				YPosition = YPosition - (int)jumpTrajectory(&start);
-				while (YPosition < WINDOW_HEIGHT/2){
-					SDL_RenderClear(renderer);
-					loadImage(renderer, 0, XPosition, YPosition);
-					YPosition = YPosition - (int)jumpTrajectory(&start);
-				}
-		}
-	}
-}
-
 //TODO Will be changed to fixed point integer
 int jumpTrajectory(float *accelerate){
 	(*accelerate) = (*accelerate) - 1;
 	return (int)(*accelerate);
+}
+
+int setWindowFullscreen(SDL_Window **window){
+	if (SDL_SetWindowFullscreen(*window, SDL_WINDOW_FULLSCREEN) != 0){
+		fprintf(stderr, "Erreur SDL_SetWindowFullscreen : %s", SDL_GetError());
+		return EXIT_FAILURE;
+	} else { return EXIT_SUCCESS; }
 }

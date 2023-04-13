@@ -1,6 +1,7 @@
 // Includes from ...
 #include "primitives/core.h"
 #include "interfaces/mouvement.h"
+#include "interfaces/gameLoop.h"
 
 
 // Tests for imported modules
@@ -26,6 +27,7 @@ int testCore(){
 	SDL_Renderer *renderer = NULL;
 
 	createWindow(&window, &renderer);
+	setWindowFullscreen(&window);
 
 	loadImage(renderer, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
 

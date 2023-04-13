@@ -3,6 +3,7 @@
 		"sdl.h": "c",
 		"_structs.h": "c",
 		"core.h": "c",
-		"mouvement.h": "c"
+		"mouvement.h": "c",
+		"gameloop.h": "c"
 	}
 }
