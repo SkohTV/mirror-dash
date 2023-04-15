@@ -12,7 +12,17 @@ void startSDL(){
 
 
 int createWindow(SDL_Window **window, SDL_Renderer **renderer){
-	if(SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, SDL_RENDERER_ACCELERATED, window, renderer) != 0){
+	int res = SDL_CreateWindowAndRenderer(
+			// Window size
+			WINDOW_WIDTH,
+			WINDOW_HEIGHT,
+			// Flags
+			SDL_RENDERER_ACCELERATED | SDL_WINDOW_MAXIMIZED | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE,
+			// BOTH MUST BE PASSED HERE
+			window,
+			renderer
+		);
+	if(res != 0){
 		fprintf(stderr, "Erreur SDL_CreateWindowAndRenderer : %s", SDL_GetError());
 		return EXIT_FAILURE;
 	} else { return EXIT_SUCCESS; }
@@ -70,7 +80,7 @@ void loadImage(SDL_Renderer *renderer, char shape, int X, int Y){
 
 
 //TODO Will be changed to fixed point integer
-int jumpTrajectory(float *accelerate){
+int jumpTrajectory(double *accelerate){
 	(*accelerate) = (*accelerate) - 1;
 	return (int)(*accelerate);
 }

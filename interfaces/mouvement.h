@@ -10,10 +10,8 @@
 // Functions
 /**
  * @brief Make the player jump
- * 
- * @param force 
  */
-//void jump(SDL_Renderer *renderer);
+void playerJump();
 
 
 

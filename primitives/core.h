@@ -46,9 +46,9 @@ void loadImage(SDL_Renderer *renderer, char shape, int X, int Y);
  * @brief Return the plus or minus to the X position of the cube
  * 
  * @param accelerate 
- * @return int 
+ * @return double 
  */
-int jumpTrajectory(float *accelerate);
+int jumpTrajectory(double *accelerate);
 
 /**
  * @brief Set the Window Fullscreen object
