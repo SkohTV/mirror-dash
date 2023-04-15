@@ -31,7 +31,7 @@ int testCore(){
 
 	loadImage(renderer, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
 
-	eventHandler(renderer);
+	gameLoop(renderer);
 	
 	return EXIT_SUCCESS;
 }

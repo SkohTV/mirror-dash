@@ -11,31 +11,24 @@ void startSDL(){
 }
 
 
-int closeSDL(){
-	SDL_Quit ();
-	return EXIT_SUCCESS;
-}
-
-
 int createWindow(SDL_Window **window, SDL_Renderer **renderer){
-	if(SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_FULLSCREEN, window, renderer) != 0){
+	if(SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, SDL_RENDERER_ACCELERATED, window, renderer) != 0){
 		fprintf(stderr, "Erreur SDL_CreateWindowAndRenderer : %s", SDL_GetError());
 		return EXIT_FAILURE;
 	} else { return EXIT_SUCCESS; }
 }
 
 
-int freeWindow(SDL_Window *window, SDL_Renderer *renderer){
+int closeSDL(SDL_Window *window, SDL_Renderer *renderer){
 	if(NULL != renderer){
 		SDL_DestroyRenderer(renderer);
-	}	if(NULL != window){
+	}	 else { return EXIT_FAILURE; }
+	if(NULL != window){
 		SDL_DestroyWindow(window);
 		SDL_Quit ();
 		printf("Quit\n");
 		return EXIT_SUCCESS;
-	} else {
-		return EXIT_FAILURE;
-	}
+	} else { return EXIT_FAILURE; }
 }
 
 

@@ -13,7 +13,7 @@
  * 
  * @param force 
  */
-void jump(SDL_Renderer *renderer);
+//void jump(SDL_Renderer *renderer);
 
 
 

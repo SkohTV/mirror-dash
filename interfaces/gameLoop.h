@@ -8,11 +8,11 @@
 
 // Functions
 /**
- * @brief Handle any key press nor click
+ * @brief Loop each frame, do actions
  * 
  * @param renderer 
  */
-void eventHandler(SDL_Renderer *renderer);
+void gameLoop(SDL_Renderer *renderer);
 
 
 

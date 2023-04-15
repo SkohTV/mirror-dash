@@ -15,12 +15,13 @@
 void startSDL();
 
 /**
- * @brief Close the SDL (don't free)
+ * @brief Close the SDL and free
  * 
+ * @param window 
+ * @param renderer 
  * @return int 
  */
-
-int closeSDL();
+int closeSDL(SDL_Window *window, SDL_Renderer *renderer);
 
 /**
  * @brief Create a Window object
@@ -30,15 +31,6 @@ int closeSDL();
  * @return int 
  */
 int createWindow(SDL_Window **window, SDL_Renderer **renderer);
-
-/**
- * @brief Free the window object
- * 
- * @param window 
- * @param renderer 
- * @return int 
- */
-int freeWindow(SDL_Window *window, SDL_Renderer *renderer);
 
 /**
  * @brief Load an image from a file, at coordinates

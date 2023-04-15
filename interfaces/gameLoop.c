@@ -2,28 +2,62 @@
 #include "../primitives/core.h"
 
 
-void eventHandler(SDL_Renderer *renderer){
+void gameLoop(SDL_Renderer *renderer){
 	int running = 1; // Si la fenêtre est fermée ou pas
 	SDL_Event event; // Récupère les events
-	float currentJumpForce = JUMP_FORCE;
-	
 	int XPosition = WINDOW_WIDTH/2;
 	int YPosition = WINDOW_HEIGHT/2;
+	
+	float currentJumpForce = 0;
 	
 	while (running) {
 		SDL_PollEvent(&event); // New and improved
 		Uint64 start = SDL_GetPerformanceCounter();
 		
-		switch (event.type) { // Event Handling
-			case SDL_QUIT :
-				running = 0; break;
-			case SDL_MOUSEBUTTONDOWN :
-				YPosition = YPosition - (int)jumpTrajectory(&start); break;
+		while (SDL_PollEvent(&event)){ // Event Handling
+			switch (event.type){
+				case SDL_QUIT :
+					running = 0; break;
+				case SDL_MOUSEBUTTONDOWN :
+					; break;
+			}
 		}
 
 		SDL_RenderClear(renderer);
 		loadImage(renderer, 0, XPosition, YPosition);
 
+		Uint64 end = SDL_GetPerformanceCounter();
+		float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
+		SDL_Delay(floor(16.666f - elapsedMS)); // Cap to 60 FPS
+	}
+
+
+
+// Game loop
+	while (1) {
+		Uint64 start = SDL_GetPerformanceCounter();
+
+		SDL_Event event;
+		while (SDL_PollEvent(&event)) {
+			switch (event.type) {
+				case SDL_QUIT:
+						return EXIT_SUCCESS;
+				case SDL_MOUSEBUTTONDOWN:
+						printf("Mouse\n");
+						break;
+			}
+		}
+
+		// Clear the screen
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_RenderClear(renderer);
+
+		// Draw game objects
+		// ...
+
+		SDL_RenderPresent(renderer);
+
+		// FPS Capping
 		Uint64 end = SDL_GetPerformanceCounter();
 		float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
 		SDL_Delay(floor(16.666f - elapsedMS)); // Cap to 60 FPS
