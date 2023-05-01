@@ -3,39 +3,74 @@
 
 
 void gameLoop(SDL_Renderer *renderer){
-	int running = 1; // Si la fenêtre est fermée ou pas
-	SDL_Event event; // Récupère les events
+	// CONSTANTS
+	int floorY = 3*(WINDOW_HEIGHT/4); // Where floor starts
+	int frameDelay = 1000 / CAPPED_FPS; // Delay between frames
+
+	// GAMESTATE
+	int running = 1;
+
+	// Physics
 	int XPosition = WINDOW_WIDTH/2;
-	int YPosition = WINDOW_HEIGHT/2;
-	
-	float currentJumpForce = 0;
-	
+	int YPosition = floorY;
+	double verticalPower = 0;
+	char grounded = 0;
+
+
+	SDL_Event event; // Catch events
+
+	Uint32 frameStart; // Tick of the first frame
+	int frameTime; // Duration between first and last frames
+	int totalFrames = 0;
+
+
 	while (running) {
-		SDL_PollEvent(&event); // New and improved
-		Uint64 start = SDL_GetPerformanceCounter();
-		
+		//* PRE-PROCESS
+		frameStart = SDL_GetTicks();
+
+
+		//* EVENT LOOP
 		while (SDL_PollEvent(&event)){ // Event Handling
 			switch (event.type){
-				case SDL_QUIT :
+				case SDL_QUIT:
 					running = 0 ; break;
-				case SDL_MOUSEBUTTONDOWN :
-					playerJump() ; break;
+				case SDL_KEYDOWN:
+					if (grounded){ verticalPower = JUMP_FORCE; }
+					break;
 			}
 		}
 
+
+		//* PHYSIC LOOP
+		// Check if grounded, brings up above floor
+		if (YPosition > floorY) { // If below ground (then bring back up)
+			YPosition = floorY;
+			grounded = 1;
+		} else if (YPosition == floorY) { // If at the ground
+			grounded = 1;
+		} else { grounded = 0; } // If above ground
+
+		if (grounded && verticalPower <= 0){
+			verticalPower = 0.0;
+		} else {
+			YPosition = YPosition - jumpTrajectory(&verticalPower);
+		}
+
+
+		//* RENDER LOOP
 		SDL_RenderClear(renderer);
 		loadImage(renderer, 0, XPosition, YPosition);
 
-		Uint64 end = SDL_GetPerformanceCounter();
-		float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
-		SDL_Delay(floor(16.666f - elapsedMS)); // Cap to 60 FPS
+
+		//* POST-PROCESS
+		frameTime = SDL_GetTicks() - frameStart; // Get delay between start and finish of loop
+		if (frameDelay > frameTime) { SDL_Delay(frameDelay - frameTime); } // Delay the frame if needed
+		totalFrames++; // Add one to total frames
 	}
 }
 
 
 /*
-Cap les fps
-Récupérer les events et les vérifier
 Gérer le scroll du background & la musique
 Les projectiles ?
 Mouvement automatique du joueur

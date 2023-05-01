@@ -2,16 +2,13 @@
 #ifndef _STRUCTS_H
 #define _STRUCTS_H
 
-//#define WINDOW_WIDTH 640
-//#define WINDOW_HEIGHT 480
-
-//#define WINDOW_WIDTH 640*2
-//#define WINDOW_HEIGHT 480*2
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 
-#define JUMP_FORCE 25.0
+#define JUMP_FORCE 20
+
+#define CAPPED_FPS 60
 
 
 // Global Includes
@@ -30,8 +27,24 @@
 typedef enum _Shape{
 	cube = 0,
 	background = 1,
+	square = 2,
+	spike = 3,
 } Shape;
 
+
+//* Item
+typedef struct _ItemEntity{
+	char type;
+	int posX;
+	int posY;
+	int summon;
+} ItemEntity;
+
+//* Linked List 
+typedef struct _LinkedList{
+	struct _ItemEntity *item;
+	struct _LinkedList *next;
+} LinkedList;
 
 
 // Close safety define
