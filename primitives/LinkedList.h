@@ -7,18 +7,38 @@
 
 
 // Functions
-/***/
+/**
+ * @brief 
+ * 
+ * @param list 
+ */
 void LLnew(LinkedList *list);
 
-/***/
-ItemEntity LLpush(LinkedList *list, ItemEntity *item);
+/**
+ * @brief 
+ * 
+ * @param list 
+ * @param item 
+ */
+void LLpush(LinkedList *list, ItemEntity *item);
 
-/***/
-void LLpop(LinkedList *list);
+/**
+ * @brief 
+ * 
+ * @param list 
+ * @return ItemEntity 
+ */
+ItemEntity LLpop(LinkedList *list);
 
 /***/
 //void LLapply(LinkedList *list, char (*functionVerif)(ItemEntity), void (*functionApply)(ItemEntity));
-void LLapply(LinkedList *list, char mode);
+//void LLapply(LinkedList *list, char mode);
+
+/**
+ * @brief 
+ * 
+ */
+ItemEntity *ITcreate(char type, int posX, int posY, int summon);
 
 
 

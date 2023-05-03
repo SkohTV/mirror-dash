@@ -40,6 +40,7 @@ typedef struct _ItemEntity{
 	int summon;
 } ItemEntity;
 
+
 //* Linked List 
 typedef struct _LinkedList{
 	struct _ItemEntity *item;

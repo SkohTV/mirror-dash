@@ -81,6 +81,7 @@ void loadImage(SDL_Renderer *renderer, char shape, int X, int Y){
 
 //TODO Will be changed to fixed point integer
 int jumpTrajectory(double *accelerate){
+	if (accelerate > 0) {  }
 	(*accelerate) = (*accelerate) - 1;
 	return (int)(*accelerate);
 }

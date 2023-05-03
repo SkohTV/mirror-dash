@@ -13,7 +13,7 @@ void gameLoop(SDL_Renderer *renderer){
 	// Physics
 	int XPosition = WINDOW_WIDTH/2;
 	int YPosition = floorY;
-	double verticalPower = 0;
+	double accelerate = 0;
 	char grounded = 0;
 
 
@@ -35,7 +35,7 @@ void gameLoop(SDL_Renderer *renderer){
 				case SDL_QUIT:
 					running = 0 ; break;
 				case SDL_KEYDOWN:
-					if (grounded){ verticalPower = JUMP_FORCE; }
+					if (grounded){ accelerate = JUMP_FORCE; }
 					break;
 			}
 		}
@@ -50,10 +50,10 @@ void gameLoop(SDL_Renderer *renderer){
 			grounded = 1;
 		} else { grounded = 0; } // If above ground
 
-		if (grounded && verticalPower <= 0){
-			verticalPower = 0.0;
+		if (grounded && accelerate <= 0){
+			accelerate = 0.0;
 		} else {
-			YPosition = YPosition - jumpTrajectory(&verticalPower);
+			YPosition = YPosition - jumpTrajectory(&accelerate);
 		}
 
 

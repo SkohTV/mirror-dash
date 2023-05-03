@@ -1,16 +1,18 @@
 // Includes from ...
 #include "primitives/core.h"
+#include "primitives/LinkedList.h"
 #include "interfaces/mouvement.h"
 #include "interfaces/gameLoop.h"
 
 
 // Tests for imported modules
-int testCore();
+//int testCore();
 
 
 //int main(int argc, char *argv[]){
 int main(){
-	testCore();
+	//testCore();
+	LinkedListTest();
 
 	// Todo /   Other module tests
 
@@ -29,9 +31,22 @@ int testCore(){
 	createWindow(&window, &renderer);
 	//setWindowFullscreen(&window);
 
-	loadImage(renderer, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+	//loadImage(renderer, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
 
 	gameLoop(renderer);
 	
 	return EXIT_SUCCESS;
+}
+
+int LinkedListTest(){
+	LinkedList *LL1;
+	LLnew(LL1);
+	ITcreate('a', 12, 13, 14);
+	LLpush(LL1, ITcreate('a', 12, 13, 14));
+	printf("a\n");
+	LLpush(LL1, ITcreate('b', 12, 13, 14));
+	LLpush(LL1, ITcreate('c', 12, 13, 14));
+	printf("%c\n", LLpop(LL1).type);
+	printf("%c\n", LLpop(LL1).type);
+	printf("%c\n", LLpop(LL1).type);
 }
