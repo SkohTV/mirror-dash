@@ -5,6 +5,8 @@
 		"core.h": "c",
 		"mouvement.h": "c",
 		"gameloop.h": "c",
-		"linkedlist.h": "c"
+		"linkedlist.h": "c",
+		"cstdlib": "c",
+		"tests.h": "c"
 	}
 }

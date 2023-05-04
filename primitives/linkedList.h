@@ -10,9 +10,9 @@
 /**
  * @brief 
  * 
- * @param list 
+ * @return LinkedList* 
  */
-void LLnew(LinkedList *list);
+LinkedList *LLnew();
 
 /**
  * @brief 
@@ -20,15 +20,15 @@ void LLnew(LinkedList *list);
  * @param list 
  * @param item 
  */
-void LLpush(LinkedList *list, ItemEntity *item);
+void LLpush(LinkedList **list, ItemEntity *item);
 
 /**
  * @brief 
  * 
  * @param list 
- * @return ItemEntity 
+ * @return ItemEntity* 
  */
-ItemEntity LLpop(LinkedList *list);
+ItemEntity *LLpop(LinkedList **list);
 
 /***/
 //void LLapply(LinkedList *list, char (*functionVerif)(ItemEntity), void (*functionApply)(ItemEntity));

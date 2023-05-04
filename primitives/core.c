@@ -4,7 +4,7 @@
 
 void startSDL(){
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-		fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n",
+		fprintf(stderr, "Error: Cannot init SDL -> %s\n",
 		SDL_GetError());
 		exit(EXIT_FAILURE); // On quitte le programme
 	}
@@ -17,13 +17,13 @@ int createWindow(SDL_Window **window, SDL_Renderer **renderer){
 			WINDOW_WIDTH,
 			WINDOW_HEIGHT,
 			// Flags
-			SDL_RENDERER_ACCELERATED | SDL_WINDOW_MAXIMIZED | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE,
+			SDL_RENDERER_ACCELERATED | SDL_WINDOW_MAXIMIZED | SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS,
 			// BOTH MUST BE PASSED HERE
 			window,
 			renderer
 		);
 	if(res != 0){
-		fprintf(stderr, "Erreur SDL_CreateWindowAndRenderer : %s", SDL_GetError());
+		fprintf(stderr, "Error: SDL_CreateWindowAndRenderer -> %s", SDL_GetError());
 		return EXIT_FAILURE;
 	} else { return EXIT_SUCCESS; }
 }
@@ -46,20 +46,20 @@ void loadImage(SDL_Renderer *renderer, char shape, int X, int Y){
 	SDL_Texture *texture = NULL;
 	SDL_Surface *surface = NULL;
 	if ( renderer == NULL ){
-		fprintf(stderr, "Echec de creation du renderer : %s", SDL_GetError());
+		fprintf(stderr, "Error: Cannot create renderer -> %s", SDL_GetError());
 	}	else {
 		switch (shape){
-			case 0:
+			case cube:
 				surface = IMG_Load("assets/skins/base.png");
 				break;
 		}
 		if (surface == NULL ){
-			fprintf(stderr, "Echec de chargement du fichier : %s ", SDL_GetError());
+			fprintf(stderr, "Error: Cannot load file -> %s ", SDL_GetError());
 	}	else {
 			//SDL_SetColorKey ( surface, SDL_TRUE, 0x000000 );
 			texture = SDL_CreateTextureFromSurface(renderer, surface);
 			if (texture == NULL){
-				fprintf(stderr, "Echec de creation de la texture : %s", SDL_GetError());
+				fprintf(stderr, "Error: Cannot create texture -> %s", SDL_GetError());
 			}	else {
 				SDL_Rect dest = {
 					X - surface->w/2,
@@ -79,16 +79,16 @@ void loadImage(SDL_Renderer *renderer, char shape, int X, int Y){
 }
 
 
-//TODO Will be changed to fixed point integer
 int jumpTrajectory(double *accelerate){
-	if (accelerate > 0) {  }
+	if ((*accelerate) > 0) {  }
 	(*accelerate) = (*accelerate) - 1;
 	return (int)(*accelerate);
 }
 
+
 int setWindowFullscreen(SDL_Window **window){
 	if (SDL_SetWindowFullscreen(*window, SDL_WINDOW_FULLSCREEN) != 0){
-		fprintf(stderr, "Erreur SDL_SetWindowFullscreen : %s", SDL_GetError());
+		fprintf(stderr, "Error: SDL_SetWindowFullscreen -> %s", SDL_GetError());
 		return EXIT_FAILURE;
 	} else { return EXIT_SUCCESS; }
 }

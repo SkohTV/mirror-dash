@@ -66,6 +66,7 @@ void gameLoop(SDL_Renderer *renderer){
 		frameTime = SDL_GetTicks() - frameStart; // Get delay between start and finish of loop
 		if (frameDelay > frameTime) { SDL_Delay(frameDelay - frameTime); } // Delay the frame if needed
 		totalFrames++; // Add one to total frames
+		//if (totalFrames % 60 == 0) {printf("%d\n", totalFrames/60);}
 	}
 }
 
