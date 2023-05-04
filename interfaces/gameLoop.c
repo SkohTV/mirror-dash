@@ -4,7 +4,7 @@
 
 void gameLoop(SDL_Renderer *renderer){
 	// CONSTANTS
-	int floorY = 3*(WINDOW_HEIGHT/4); // Where floor starts
+	int floorY = 8*(WINDOW_HEIGHT/9); // Where floor starts
 	int frameDelay = 1000 / CAPPED_FPS; // Delay between frames
 
 	// GAMESTATE
@@ -59,7 +59,9 @@ void gameLoop(SDL_Renderer *renderer){
 
 		//* RENDER LOOP
 		SDL_RenderClear(renderer);
-		loadImage(renderer, 0, XPosition, YPosition);
+		loadImage(renderer, cube, XPosition, YPosition);
+		SDL_SetRenderTarget(renderer, NULL); // Renderer becames default target
+		SDL_RenderPresent(renderer);
 
 
 		//* POST-PROCESS
@@ -73,15 +75,14 @@ void gameLoop(SDL_Renderer *renderer){
 
 /*
 Gérer le scroll du background & la musique
-Les projectiles ?
 Mouvement automatique du joueur
 */
 
 /*
 Contact avec le 'sol'(barre du milieu)
 Contact avec un obstacle:
-	- piques, murs, projectiles
-	- pads, boost, boules de sauts, portails ?
+	- piques, murs
+	- pads, boules de sauts
 Eventuellement, sortie de map ? 
 
 */

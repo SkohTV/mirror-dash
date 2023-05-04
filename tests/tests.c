@@ -5,10 +5,11 @@
 void testsRun(){
 	printf("Test Core Utils : %s\n", testCore() ? "failure":"success");
 	//printf("Test Linked Lists : %s\n", testLinkedLists() ? "failure":"success");
+	//printf("Test File I/O : %s\n", testFiles() ? "failure":"success");
 }
 
 
-//* Module 1
+//* Module Test Core Utils
 // Datastructure be like
 // Ex: 1 -> 6 -> 3 -> 8 (to visualize while coding)
 int testCore(){
@@ -17,9 +18,9 @@ int testCore(){
 	SDL_Renderer *renderer = NULL;
 
 	createWindow(&window, &renderer);
-	//setWindowFullscreen(&window);
 
-	//loadImage(renderer, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	SDL_RenderClear(renderer);
 
 	gameLoop(renderer);
 	
@@ -27,7 +28,7 @@ int testCore(){
 }
 
 
-//* Module 1
+//* Module Test Linked Lists
 // Datastructure be like
 // Ex: 1 -> 6 -> 3 -> 8 (to visualize while coding)
 int testLinkedLists(){
@@ -44,5 +45,17 @@ int testLinkedLists(){
 	free(its[1]);
 	free(its[2]);
 	free(its);
+	return EXIT_SUCCESS;
+}
+
+
+int testFiles(){
+	createFile();
+	LinkedList *LL1 = readFile();
+	ItemEntity **its = malloc(sizeof(ItemEntity) * 3);
+	for (int i = 0; i < 3; i++){ its[i] = LLpop(&LL1); }
+	printf("%d\n", its[0]->summon);
+	printf("%d\n", its[1]->summon);
+	printf("%d\n", its[2]->summon);
 	return EXIT_SUCCESS;
 }

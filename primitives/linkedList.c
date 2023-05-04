@@ -14,10 +14,11 @@ void LLpush(LinkedList **list, ItemEntity *item){
 		new->item = item;
 		new->next = *list;
 		*list = new;
-	} else { LLpush(&((*list)->next), item); }
+	} else { LLpush(&((*list)->next), item); } // We need to go back as a pointer ** (so use of &)
 }
 
 
+//! Doesn't free the item !!
 ItemEntity *LLpop(LinkedList **list){
 	LinkedList *tmpList = *list;
 	ItemEntity *tmpItem = (*list)->item;
