@@ -23,6 +23,9 @@ void gameLoop(SDL_Renderer *renderer){
 	int frameTime; // Duration between first and last frames
 	int totalFrames = 0;
 
+	LinkedList *LL1 = LLnew();
+	LinkedList *LL2 = LLnew();
+
 
 	while (running) {
 		//* PRE-PROCESS

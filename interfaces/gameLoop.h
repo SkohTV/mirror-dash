@@ -4,6 +4,7 @@
 
 // Includes & Defines
 #include "../primitives/_structs.h"
+#include "../primitives/linkedList.h"
 
 
 // Functions
