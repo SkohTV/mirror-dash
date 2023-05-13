@@ -12,12 +12,15 @@
 #include "../interfaces/mouvement.h"
 #include "../interfaces/gameLoop.h"
 
+
+
 // Functions
 /**
- * @brief 
+ * @brief Runs a test to check if everything still works as intented
  * 
+ * @param testName 
  */
-void testsRun();
+void testsRun(char testName);
 
 /**
  * @brief 
@@ -27,25 +30,26 @@ void testsRun();
 int testCore();
 
 /**
- * @brief 
+ * @brief Test for the Linked Lists (with ItemEntity nodes)
  * 
  * @return int 
  */
 int testLinkedLists();
 
 /**
- * @brief 
+ * @brief Test for the file input / output of levels
  * 
  * @return int 
  */
 int testFiles();
 
 /**
- * @brief 
+ * @brief First basic featured level
  * 
  * @return int 
  */
 int testFirstLevel();
+
 
 
 // Close safety define

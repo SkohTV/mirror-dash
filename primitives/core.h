@@ -42,7 +42,7 @@ int createWindow(SDL_Window **window, SDL_Renderer **renderer);
 SDL_Texture *loadImage(SDL_Renderer *renderer, char shape);
 
 /**
- * @brief 
+ * @brief Render an image to renderer from a texture, and coordinates
  * 
  * @param renderer 
  * @param texture 
@@ -57,9 +57,9 @@ void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int
  * @brief Return the plus or minus to the X position of the cube
  * 
  * @param accelerate 
- * @return double 
+ * @return int 
  */
-int jumpTrajectory(double *accelerate);
+int jumpTrajectory(int *accelerate);
 
 
 

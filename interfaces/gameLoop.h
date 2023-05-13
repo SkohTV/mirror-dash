@@ -9,9 +9,10 @@
 
 // Functions
 /**
- * @brief Loop each frame, do actions
+ * @brief Loop each tick, do actions
  * 
  * @param renderer 
+ * @param mapDir
  */
 void gameLoop(SDL_Renderer *renderer, char *mapDir);
 

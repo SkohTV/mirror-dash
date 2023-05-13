@@ -4,27 +4,25 @@
 
 
 void gameLoop(SDL_Renderer *renderer, char *mapDir){
-	// CONSTANTS
+	// Constants
 	int floorY = 8*(WINDOW_HEIGHT/9); // Where floor starts
 	int frameDelay = 1000 / CAPPED_FPS; // Delay between frames
-	printf("%d\n", floorY);
 
-	// GAMESTATE
-	int running = 1;
+	// Gamestate
+	char running = 1;
+	char alive = 1;
 
 	// Physics
 	int XPosition = WINDOW_WIDTH/2;
 	int YPosition = floorY;
-	double accelerate = 0;
+	int accelerate = 0;
 	char grounded = 0;
 
-
+	// Handling
 	SDL_Event event; // Catch events
-
 	Uint32 frameStart; // Tick of the first frame
 	int frameTime; // Duration between first and last frames
 	int totalFrames = 0;
-
 
 	// Init of future (LL1) and alive (LL2) items
 	char *levelFileUrl = malloc(strlen(mapDir) + strlen("map.level") + 1);
@@ -35,57 +33,30 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 	free(levelFileUrl);
 
 	// Loading of first assets
+	SDL_Texture *cubeTexture = loadImage(renderer, cube);
+	SDL_Texture *groundTexture = loadImage(renderer, ground);
+	SDL_Texture *bgTexture = loadImage(renderer, background);
+
+	// Loading of items assets
 	tmpLL2 = LL1;
 	while (tmpLL2){
 		tmpLL2->item->texture = loadImage(renderer, tmpLL2->item->type);
 		tmpLL2 = tmpLL2->next;
 	}
-	SDL_Texture *cubeTexture = loadImage(renderer, cube);
-	SDL_Texture *backgroundTexture = loadImage(renderer, background);
+
+
 
 	while (running) {
 		//* PRE-PROCESS
 		frameStart = SDL_GetTicks();
 
-
 		// If summon time, then pass to next list and check next item
-		// Else go next
+		// Else we break, cause case won't be met latter on (check readme diagram)
 		while (LL1){
 			if (LL1->item->summon <= totalFrames){
 				LLpush(&LL2, LLpop(&LL1));
 			}	else { break; }
 		}
-
-		tmpLL2 = LL2;
-		while (tmpLL2){
-			tmpLL2->item->posX -= 13;
-			tmpLL2 = tmpLL2->next;
-		}
-
-		if (LL2){ liberationOfSpace(&LL2); }
-
-		//LinkedList tmpLL2 = LL2;
-		//int a = 0;
-		//while(tmpLL2){
-		//	printf("Keep %d : %d\n", a++, tmpLL2->item->posX);
-		//	if (tmpLL2->item->posX <= -BLOCK_SIZE){
-		//		//printf("Throw : %d\n", tmpLL2->item->posX);
-		//		LLpop(&alterLL2);
-		//	} else {
-		//		(tmpLL2) = (tmpLL2)->next;
-		//	} 
-		//} LL2 = tmp;
-
-
-		//tmpLL2 = LL2;
-		//while (tmpLL2){
-		//	if (tmpLL2->item->posX > WINDOW_WIDTH){
-		//		LLpop(&tmpLL2);
-		//		break;
-		//	} else { tmpLL2 = tmpLL2->next; }
-		//}
-
-		
 
 
 
@@ -103,60 +74,95 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 
 
 		//* PHYSIC LOOP
+		// Move all items forward by 8 px
+		tmpLL2 = LL2;
+		while (tmpLL2){
+			tmpLL2->item->posX -= 8;
+			tmpLL2 = tmpLL2->next;
+		}
+
+		// Pop all items that are out of bounds (left, so gone)
+		if (LL2){ liberationOfSpace(&LL2); }
+
 		// Check if grounded, brings up above floor
-		if (YPosition > floorY) { // If below ground (then bring back up)
+		grounded = 0;
+		if (YPosition > floorY + SAFETY_MARGIN) { // If below ground (then bring back up)
 			YPosition = floorY;
 			grounded = 1;
 		} else if (YPosition == floorY) { // If at the ground
 			grounded = 1;
-		} else { grounded = 0; } // If above ground
+		} 
+
+		tmpLL2 = LL2;
+		while (tmpLL2){
+			// If too far, then ignore
+			if ((XPosition + BLOCK_SIZE) < tmpLL2->item->posX || XPosition > (tmpLL2->item->posX + BLOCK_SIZE)){
+				tmpLL2 = tmpLL2->next;
+				continue;
+			}
+			
+			// We save 3 bools for state of collision
+			//! This part of the code is messy, but modular conditions always are (abstraction might hide it sometimes)
+			char borderRight =( (XPosition + BLOCK_SIZE) >= tmpLL2->item->posX &&
+			(((YPosition + BLOCK_SIZE) >= tmpLL2->item->posY && (YPosition <= tmpLL2->item->posY)) ||
+			(YPosition + BLOCK_SIZE >= tmpLL2->item->posY + BLOCK_SIZE && (YPosition <= tmpLL2->item->posY + BLOCK_SIZE))) );
+			char borderTop = (YPosition <= (tmpLL2->item->posY + BLOCK_SIZE) && (YPosition + SAFETY_MARGIN) >= (tmpLL2->item->posY + BLOCK_SIZE));
+			char borderBot = ((YPosition + BLOCK_SIZE) <= tmpLL2->item->posY && (YPosition + BLOCK_SIZE + SAFETY_MARGIN) >= tmpLL2->item->posY);
+			
+			// Switch depending on type & state
+			switch(tmpLL2->item->type){
+				case square:
+					if (borderBot){ // Collision with bottom border of player and top border of square
+						grounded = 1; // We just grounded because square is safe
+						YPosition = tmpLL2->item->posY - BLOCK_SIZE;
+					} else if (borderTop || borderRight){ alive = 0; }
+					break;
+				case spike:
+					if (borderTop || borderRight || borderBot){ alive = 0; }
+					break;
+			} tmpLL2 = tmpLL2->next;
+		}
 
 		if (grounded && accelerate <= 0){
-			accelerate = 0.0;
+			accelerate = 0;
 		} else {
 			YPosition = YPosition - jumpTrajectory(&accelerate);
 		}
 
 
 
-
 		//* RENDER LOOP
+		// Only render 1/2 frames (game will run at 30 fps visually, to reduce lag)
+		if (totalFrames % 2){
+			// Clear renderer
+			SDL_RenderClear(renderer);
 
-		SDL_RenderClear(renderer);
+			// Render default assets (bg, cube...)
+			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560), floorY, 2560, 720);
+			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560 + 2560), floorY, 2560, 720);
+			renderImage(renderer, groundTexture, WINDOW_WIDTH+300, floorY+300, WINDOW_WIDTH+300, 300);
+			renderImage(renderer, cubeTexture, XPosition, YPosition, BLOCK_SIZE, BLOCK_SIZE);
 
-		if (totalFrames%2){
-		tmpLL2 = LL2;
-		while (tmpLL2){
-			renderImage(renderer, tmpLL2->item->texture, tmpLL2->item->posX, tmpLL2->item->posY, 80, 80);
-			tmpLL2 = tmpLL2->next;
+			// Render all items in LL2
+			tmpLL2 = LL2;
+			while (tmpLL2){
+				renderImage(renderer, tmpLL2->item->texture, tmpLL2->item->posX, tmpLL2->item->posY, BLOCK_SIZE, BLOCK_SIZE);
+				tmpLL2 = tmpLL2->next;
+			}
+
+			// Render the renderer
+			SDL_RenderPresent(renderer);
 		}
 
-		renderImage(renderer, cubeTexture, XPosition, YPosition, 80, 80);
-		//SDL_SetRenderTarget(renderer, NULL); // Renderer becames default target
-		renderImage(renderer, backgroundTexture, 1280, floorY+300, 1280, 300);
-		renderImage(renderer, backgroundTexture, 1280+300, floorY+300, 1280, 300);
-		SDL_RenderPresent(renderer);
-}
+
 
 		//* POST-PROCESS
+		// Delay between ticks
 		frameTime = SDL_GetTicks() - frameStart; // Get delay between start and finish of loop
 		if (frameDelay > frameTime) { SDL_Delay(frameDelay - frameTime); } // Delay the frame if needed
 		totalFrames++; // Add one to total frames
-		if (totalFrames % 60 == 0) {printf("%d\n", totalFrames/60);}
+
+		// If you lost, we stop the loop and so the game
+		if (!alive) { running = 0; }
 	}
 }
-
-
-/*
-Gérer le scroll du background & la musique
-Mouvement automatique du joueur
-*/
-
-/*
-Contact avec le 'sol'(barre du milieu)
-Contact avec un obstacle:
-	- piques, murs
-	- pads, boules de sauts
-Eventuellement, sortie de map ? 
-
-*/

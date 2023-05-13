@@ -1,7 +1,8 @@
 #include "linkedList.h"
 
 
-
+//? We are creating a QUEUE, so we push at start and pop at end
+//? A new list is always just NULL
 void LLpush(LinkedList **list, ItemEntity *item){
 	if (*list == NULL){
 		LinkedList *new = malloc(sizeof(LinkedList));
@@ -12,10 +13,10 @@ void LLpush(LinkedList **list, ItemEntity *item){
 }
 
 
-//! Doesn't free the item !!
+//! Doesn't free the item !! (intentionally)
 ItemEntity *LLpop(LinkedList **list){
-	LinkedList *tmpList = *list;
-	ItemEntity *tmpItem = (*list)->item;
+	LinkedList *tmpList = *list; // Save Linked List for free later
+	ItemEntity *tmpItem = (*list)->item; // Save item for return value
 	*list = (*list)->next;
 	free(tmpList);
 	return tmpItem;
@@ -28,16 +29,18 @@ ItemEntity *ITcreate(char type, int posX, int posY, int summon){
 	new->posX = posX;
 	new->posY = posY;
 	new->summon = summon;
+	new->texture = NULL; // We don't init texture first
 	return new;
 }
 
 
+// Check gameloop for its use
 void liberationOfSpace(LinkedList **LL){
-	if ((*LL)->item->posX >= -BLOCK_SIZE){
-		return;
-	} else {
-		ItemEntity *tmp = LLpop(LL);
-		free(tmp);
-		if (!(*LL)) { liberationOfSpace(&((*LL)->next)); }
+	if (*LL) { // if LL exists
+		liberationOfSpace(&((*LL)->next)); // Go deeper in object
+		if ((*LL)->item->posX < -BLOCK_SIZE){ // If item out of bound
+			ItemEntity *tmp = LLpop(LL);
+			free(tmp);
+		}
 	}
 }

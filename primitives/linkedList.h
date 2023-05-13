@@ -6,9 +6,10 @@
 #include "_structs.h"
 
 
+
 // Functions
 /**
- * @brief 
+ * @brief Push an item to the Linked List (at start)
  * 
  * @param list 
  * @param item 
@@ -16,7 +17,7 @@
 void LLpush(LinkedList **list, ItemEntity *item);
 
 /**
- * @brief 
+ * @brief Pop an item from the Linked List and returns is (at end)
  * 
  * @param list 
  * @return ItemEntity* 
@@ -24,13 +25,18 @@ void LLpush(LinkedList **list, ItemEntity *item);
 ItemEntity *LLpop(LinkedList **list);
 
 /**
- * @brief 
+ * @brief Create an object ItemEntity and returns it
  * 
+ * @param type 
+ * @param posX 
+ * @param posY 
+ * @param summon 
+ * @return ItemEntity* 
  */
 ItemEntity *ITcreate(char type, int posX, int posY, int summon);
 
 /**
- * @brief Liberate an element of a Linked List
+ * @brief Handle logic, liberation and freeing of LL2 in gameloop
  * 
  * @param LL 
  */
