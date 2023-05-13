@@ -13,7 +13,7 @@
  * 
  * @param renderer 
  */
-void gameLoop(SDL_Renderer *renderer);
+void gameLoop(SDL_Renderer *renderer, char *mapDir);
 
 
 

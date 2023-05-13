@@ -5,6 +5,7 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
+#define BLOCK_SIZE 80
 
 #define JUMP_FORCE 20
 
@@ -38,6 +39,7 @@ typedef struct _ItemEntity{
 	int posX;
 	int posY;
 	int summon;
+	SDL_Texture *texture;
 } ItemEntity;
 
 

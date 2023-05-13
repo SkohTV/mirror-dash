@@ -6,6 +6,8 @@
 #include "_structs.h"
 
 #include "../primitives/linkedList.h"
+#include "core.h"
+
 
 
 // Functions
@@ -13,7 +15,7 @@
 void createFile();
 
 /***/
-LinkedList *readFile();
+LinkedList *readFile(char *dir);
 
 
 

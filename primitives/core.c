@@ -1,4 +1,5 @@
 #include "core.h"
+#include "linkedList.h"
 
 
 
@@ -12,20 +13,20 @@ void startSDL(){
 
 
 int createWindow(SDL_Window **window, SDL_Renderer **renderer){
-	int res = SDL_CreateWindowAndRenderer(
-			// Window size
-			WINDOW_WIDTH,
-			WINDOW_HEIGHT,
-			// Flags
-			SDL_RENDERER_ACCELERATED | SDL_WINDOW_MAXIMIZED | SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS,
-			// BOTH MUST BE PASSED HERE
-			window,
-			renderer
-		);
-	if(res != 0){
-		fprintf(stderr, "Error: SDL_CreateWindowAndRenderer -> %s", SDL_GetError());
-		return EXIT_FAILURE;
-	} else { return EXIT_SUCCESS; }
+	(*window) = SDL_CreateWindow(
+		"Mirror Dash",
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
+		WINDOW_WIDTH,
+		WINDOW_HEIGHT,
+		SDL_WINDOW_BORDERLESS | SDL_WINDOW_MAXIMIZED | SDL_WINDOW_OPENGL
+	);
+	(*renderer) = SDL_CreateRenderer(
+		*window,
+		-1,
+		SDL_RENDERER_ACCELERATED
+	);
+	return EXIT_SUCCESS;
 }
 
 
@@ -43,7 +44,7 @@ int closeSDL(SDL_Window *window, SDL_Renderer *renderer){
 }
 
 
-void loadImage(SDL_Renderer *renderer, char shape, int X, int Y){
+SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 	SDL_Texture *texture = NULL;
 	SDL_Surface *surface = NULL;
 	if ( renderer == NULL ){
@@ -54,9 +55,11 @@ void loadImage(SDL_Renderer *renderer, char shape, int X, int Y){
 				surface = IMG_Load("assets/skins/base.png");
 				break;
 			case background:
+				surface = IMG_Load("assets/blocks/ground.png");
 				break;
 			case square:
 				surface = IMG_Load("assets/blocks/square.png");
+				//surface = IMG_Load("assets/skins/base.png");
 				break;
 		}
 		if (surface == NULL ){
@@ -65,20 +68,18 @@ void loadImage(SDL_Renderer *renderer, char shape, int X, int Y){
 			texture = SDL_CreateTextureFromSurface(renderer, surface);
 			if (texture == NULL){
 				fprintf(stderr, "Error: Cannot create texture -> %s", SDL_GetError());
-			}	else {
-				SDL_Rect dest = {
-					X - surface->w/2,
-					Y - surface->h/2,
-					surface->w,
-					surface->h
-				}; // SDL_Rect serves as a location for the image
-				SDL_SetRenderTarget(renderer, texture); // Texture becames target of renderer
-				SDL_RenderCopy(renderer, texture, NULL, &dest); // Draw texture to canva
-				SDL_DestroyTexture(texture); // Destroy the texture
-			}//* End of null texture
+			} //* End of null texture
 			SDL_FreeSurface (surface); // Free alocated memory for surface
+			return texture;
 		} // End of null surface
-	}// End of null renderer
+	} // End of null renderer
+}
+
+
+void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int W, int H){
+	if (texture == NULL){ printf("Error while rendering texture\n"); }
+	SDL_Rect dest = { X - W, Y - H, W, H }; // SDL_Rect define the position of the image
+	SDL_RenderCopy(renderer, texture, NULL, &dest); // Draw texture to canva
 }
 
 

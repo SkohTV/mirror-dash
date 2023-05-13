@@ -2,12 +2,6 @@
 
 
 
-LinkedList *LLnew(){
-	LinkedList *new = NULL;
-	return new;
-}
-
-
 void LLpush(LinkedList **list, ItemEntity *item){
 	if (*list == NULL){
 		LinkedList *new = malloc(sizeof(LinkedList));
@@ -28,10 +22,6 @@ ItemEntity *LLpop(LinkedList **list){
 }
 
 
-//void LLapply(LinkedList *list, char mode){
-	
-//}
-
 ItemEntity *ITcreate(char type, int posX, int posY, int summon){
 	ItemEntity *new = malloc(sizeof(ItemEntity));
 	new->type = type;
@@ -39,4 +29,15 @@ ItemEntity *ITcreate(char type, int posX, int posY, int summon){
 	new->posY = posY;
 	new->summon = summon;
 	return new;
+}
+
+
+void liberationOfSpace(LinkedList **LL){
+	if ((*LL)->item->posX >= -BLOCK_SIZE){
+		return;
+	} else {
+		ItemEntity *tmp = LLpop(LL);
+		free(tmp);
+		if (!(*LL)) { liberationOfSpace(&((*LL)->next)); }
+	}
 }

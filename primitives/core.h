@@ -37,10 +37,21 @@ int createWindow(SDL_Window **window, SDL_Renderer **renderer);
  * 
  * @param renderer 
  * @param shape 
+ * @return SDL_Texture* 
+ */
+SDL_Texture *loadImage(SDL_Renderer *renderer, char shape);
+
+/**
+ * @brief 
+ * 
+ * @param renderer 
+ * @param texture 
  * @param X 
  * @param Y 
+ * @param W 
+ * @param H 
  */
-void loadImage(SDL_Renderer *renderer, char shape, int X, int Y);
+void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int W, int H);
 
 /**
  * @brief Return the plus or minus to the X position of the cube
@@ -49,14 +60,6 @@ void loadImage(SDL_Renderer *renderer, char shape, int X, int Y);
  * @return double 
  */
 int jumpTrajectory(double *accelerate);
-
-/**
- * @brief Set the Window Fullscreen object
- * 
- * @param window 
- * @return int 
- */
-int setWindowFullscreen(SDL_Window **window);
 
 
 

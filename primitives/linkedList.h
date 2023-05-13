@@ -10,13 +10,6 @@
 /**
  * @brief 
  * 
- * @return LinkedList* 
- */
-LinkedList *LLnew();
-
-/**
- * @brief 
- * 
  * @param list 
  * @param item 
  */
@@ -30,15 +23,18 @@ void LLpush(LinkedList **list, ItemEntity *item);
  */
 ItemEntity *LLpop(LinkedList **list);
 
-/***/
-//void LLapply(LinkedList *list, char (*functionVerif)(ItemEntity), void (*functionApply)(ItemEntity));
-//void LLapply(LinkedList *list, char mode);
-
 /**
  * @brief 
  * 
  */
 ItemEntity *ITcreate(char type, int posX, int posY, int summon);
+
+/**
+ * @brief Liberate an element of a Linked List
+ * 
+ * @param LL 
+ */
+void liberationOfSpace(LinkedList **LL);
 
 
 

@@ -40,6 +40,13 @@ int testLinkedLists();
  */
 int testFiles();
 
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
+int testFirstLevel();
+
 
 // Close safety define
 #endif
