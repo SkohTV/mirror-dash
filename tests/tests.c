@@ -5,10 +5,10 @@
 //* Global tester, run the function to test a module
 void testsRun(char testName){
 	switch (testName){
-		case 'core': printf("Test Core Utils : %s\n", testCore() ? "failure":"success") ; break ;
-		case 'list': printf("Test Linked Lists : %s\n", testLinkedLists() ? "failure":"success") ; break ;
-		case 'file': printf("Test File I/O : %s\n", testFiles() ? "failure":"success") ; break ;
-		case 'first': printf("Test First Level : %s\n", testFirstLevel() ? "failure":"success") ; break ;
+		case 0: printf("Test Core Utils : %s\n", testCore() ? "failure":"success") ; break ;
+		case 1: printf("Test Linked Lists : %s\n", testLinkedLists() ? "failure":"success") ; break ;
+		case 2: printf("Test File I/O : %s\n", testFiles() ? "failure":"success") ; break ;
+		case 3: printf("Test First Level : %s\n", testFirstLevel() ? "failure":"success") ; break ;
 	}
 }
 
