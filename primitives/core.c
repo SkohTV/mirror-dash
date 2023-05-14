@@ -37,11 +37,9 @@ int createWindow(SDL_Window **window, SDL_Renderer **renderer){
 int closeSDL(SDL_Window *window, SDL_Renderer *renderer){
 	if(NULL != renderer){ // Destroy renderer here
 		SDL_DestroyRenderer(renderer);
-		free(renderer);
 	}	 else { return EXIT_FAILURE; }
 	if(NULL != window){ // Destroy window here
 		SDL_DestroyWindow(window);
-		free(window);
 		SDL_Quit(); // Closes here
 		printf("Quit\n");
 		return EXIT_SUCCESS;
