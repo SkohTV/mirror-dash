@@ -59,7 +59,10 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 			case background: surface = IMG_Load("assets/blocks/background.png") ; break ;
 			case ground: surface = IMG_Load("assets/blocks/ground.png") ; break ;
 			case square: surface = IMG_Load("assets/blocks/square.png") ; break ;
-			case spike: surface = IMG_Load("assets/blocks/spike.png") ; break ;
+			case spikeUp: surface = IMG_Load("assets/blocks/spikeUp.png") ; break ;
+			case spikeDown: surface = IMG_Load("assets/blocks/spikeDown.png") ; break ;
+			case spikeLeft: surface = IMG_Load("assets/blocks/spikeLeft.png") ; break ;
+			case spikeRight: surface = IMG_Load("assets/blocks/spikeRight.png") ; break ;
 		}
 		if (surface == NULL ){
 			fprintf(stderr, "Error: Cannot load file -> %s ", SDL_GetError());

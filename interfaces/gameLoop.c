@@ -102,8 +102,8 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 			}
 			
 			// We save 3 bools for state of collision
-			//! This part of the code is messy, but modular conditions always are (abstraction might hide it sometimes)
-			char borderRight =( (XPosition + BLOCK_SIZE) >= tmpLL2->item->posX &&
+			//! This part of the code is messy, but modular conditions always are
+			char borderRight = ( (XPosition + BLOCK_SIZE) >= tmpLL2->item->posX &&
 			(((YPosition + BLOCK_SIZE) >= tmpLL2->item->posY && (YPosition <= tmpLL2->item->posY)) ||
 			(YPosition + BLOCK_SIZE >= tmpLL2->item->posY + BLOCK_SIZE && (YPosition <= tmpLL2->item->posY + BLOCK_SIZE))) );
 			char borderTop = (YPosition <= (tmpLL2->item->posY + BLOCK_SIZE) && (YPosition + SAFETY_MARGIN) >= (tmpLL2->item->posY + BLOCK_SIZE));
@@ -117,7 +117,10 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 						YPosition = tmpLL2->item->posY - BLOCK_SIZE;
 					} else if (borderTop || borderRight){ alive = 0; }
 					break;
-				case spike:
+				case spikeUp:
+				case spikeDown:
+				case spikeLeft:
+				case spikeRight:
 					if (borderTop || borderRight || borderBot){ alive = 0; }
 					break;
 			} tmpLL2 = tmpLL2->next;
