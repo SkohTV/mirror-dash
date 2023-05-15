@@ -17,7 +17,7 @@ void createFile(){
 	putw(360, fp);
 
 	// Obj 3
-	putc(spike, fp);
+	putc(spikeUp, fp);
 	putw(640, fp);
 	putw(540, fp);
 
