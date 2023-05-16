@@ -108,9 +108,11 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 			
 			// We save 3 bools for state of collision
 			//! This part of the code is messy, but modular conditions always are
-			char borderRight = ( (XPosition + BLOCK_SIZE) >= tmpLL2->item->posX ); //&&
-			//(((YPosition + BLOCK_SIZE) >= tmpLL2->item->posY && (YPosition <= tmpLL2->item->posY)) ||
-			//(YPosition + BLOCK_SIZE >= tmpLL2->item->posY + BLOCK_SIZE && (YPosition <= tmpLL2->item->posY + BLOCK_SIZE))) );
+			char borderRight = ( (XPosition + BLOCK_SIZE) >= tmpLL2->item->posX ) &&
+			//YPosition > && YPosition + BLOCK_SIZE >= tmpLL2->item->posY ||
+			//YPosition <= tmpLL2->item->posY + BLOCK_SIZE && NULL
+			(((YPosition + BLOCK_SIZE) >= tmpLL2->item->posY && //(YPosition <= tmpLL2->item->posY)) ||
+			(YPosition + BLOCK_SIZE >= tmpLL2->item->posY + BLOCK_SIZE && (YPosition <= tmpLL2->item->posY + BLOCK_SIZE))) );
 			char borderTop = (YPosition <= (tmpLL2->item->posY + BLOCK_SIZE) && (YPosition + SAFETY_MARGIN) >= (tmpLL2->item->posY + BLOCK_SIZE));
 			char borderBot = ((YPosition + BLOCK_SIZE) <= tmpLL2->item->posY && (YPosition + BLOCK_SIZE + SAFETY_MARGIN) >= tmpLL2->item->posY);
 
