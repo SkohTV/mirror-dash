@@ -17,6 +17,7 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 	int YPosition = floorY;
 	int accelerate = 0;
 	char grounded = 0;
+	char fakeGrounded = 0;
 
 	// Handling
 	SDL_Event event; // Catch events
@@ -66,7 +67,7 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 				case SDL_QUIT:
 					running = 0 ; break;
 				case SDL_KEYDOWN:
-					if (grounded){ accelerate = JUMP_FORCE; }
+					if (grounded || fakeGrounded){ accelerate = JUMP_FORCE; }
 					break;
 			}
 		}
@@ -74,6 +75,11 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 
 
 		//* PHYSIC LOOP
+		// You are not grounded anymore
+		grounded = 0;
+		fakeGrounded = 0;
+
+
 		// Move all items forward by 8 px
 		tmpLL2 = LL2;
 		while (tmpLL2){
@@ -85,7 +91,6 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 		if (LL2){ liberationOfSpace(&LL2); }
 
 		// Check if grounded, brings up above floor
-		grounded = 0;
 		if (YPosition > floorY) { // If below ground (then bring back up)
 			YPosition = floorY;
 			grounded = 1;
@@ -103,12 +108,18 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 			
 			// We save 3 bools for state of collision
 			//! This part of the code is messy, but modular conditions always are
-			char borderRight = ( (XPosition + BLOCK_SIZE) >= tmpLL2->item->posX &&
-			(((YPosition + BLOCK_SIZE) >= tmpLL2->item->posY && (YPosition <= tmpLL2->item->posY)) ||
-			(YPosition + BLOCK_SIZE >= tmpLL2->item->posY + BLOCK_SIZE && (YPosition <= tmpLL2->item->posY + BLOCK_SIZE))) );
+			char borderRight = ( (XPosition + BLOCK_SIZE) >= tmpLL2->item->posX ); //&&
+			//(((YPosition + BLOCK_SIZE) >= tmpLL2->item->posY && (YPosition <= tmpLL2->item->posY)) ||
+			//(YPosition + BLOCK_SIZE >= tmpLL2->item->posY + BLOCK_SIZE && (YPosition <= tmpLL2->item->posY + BLOCK_SIZE))) );
 			char borderTop = (YPosition <= (tmpLL2->item->posY + BLOCK_SIZE) && (YPosition + SAFETY_MARGIN) >= (tmpLL2->item->posY + BLOCK_SIZE));
 			char borderBot = ((YPosition + BLOCK_SIZE) <= tmpLL2->item->posY && (YPosition + BLOCK_SIZE + SAFETY_MARGIN) >= tmpLL2->item->posY);
-			
+
+			// 2 other states, only used for specific checks
+			char borderLeft = ( (XPosition + BLOCK_SIZE) >= tmpLL2->item->posX &&
+			(((YPosition + BLOCK_SIZE) >= tmpLL2->item->posY && (YPosition <= tmpLL2->item->posY)) ||
+			(YPosition + BLOCK_SIZE >= tmpLL2->item->posY + BLOCK_SIZE && (YPosition <= tmpLL2->item->posY + BLOCK_SIZE))) );
+			//char lowHeightBorder = ;
+
 			// Switch depending on type & state
 			switch(tmpLL2->item->type){
 				case square:
@@ -122,6 +133,17 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 				case spikeLeft:
 				case spikeRight:
 					if (borderTop || borderRight || borderBot){ alive = 0; }
+					break;
+				case gravityPad:
+					//if (lowHeightBorder && (borderRight || borderLeft)){ accelerate = JUMP_FORCE; }
+					break;
+				case gravityCircle:
+					printf("%d - %d | %d %d\n", borderTop, borderBot, borderRight, borderLeft);
+					if ((borderTop || borderBot) && (borderRight || borderLeft)){ fakeGrounded = 1; }
+					break;
+				case jumpPad:
+					break;
+				case jumpCircle:
 					break;
 			} tmpLL2 = tmpLL2->next;
 		}
@@ -148,7 +170,6 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560), floorY, 2560, 720);
 			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560 + 2560), floorY, 2560, 720);
 			renderImage(renderer, groundTexture, WINDOW_WIDTH+300, floorY+300, WINDOW_WIDTH+300, 300);
-			renderImage(renderer, cubeTexture, XPosition, YPosition, BLOCK_SIZE, BLOCK_SIZE);
 
 			// Render all items in LL2
 			tmpLL2 = LL2;
@@ -156,6 +177,9 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 				renderImage(renderer, tmpLL2->item->texture, tmpLL2->item->posX, tmpLL2->item->posY, BLOCK_SIZE, BLOCK_SIZE);
 				tmpLL2 = tmpLL2->next;
 			}
+
+			// Draw cube at the end
+			renderImage(renderer, cubeTexture, XPosition, YPosition, BLOCK_SIZE, BLOCK_SIZE);
 
 			// Render the renderer
 			SDL_RenderPresent(renderer);

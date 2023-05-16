@@ -35,6 +35,10 @@ typedef enum _Shape{
 	spikeDown = 5,
 	spikeLeft = 6,
 	spikeRight = 7,
+	gravityPad = 8,
+	gravityCircle = 9,
+	jumpPad = 10,
+	jumpCircle = 11
 } Shape;
 
 

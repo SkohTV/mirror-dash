@@ -63,6 +63,10 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 			case spikeDown: surface = IMG_Load("assets/blocks/spikeDown.png") ; break ;
 			case spikeLeft: surface = IMG_Load("assets/blocks/spikeLeft.png") ; break ;
 			case spikeRight: surface = IMG_Load("assets/blocks/spikeRight.png") ; break ;
+			case gravityPad: surface = IMG_Load("assets/blocks/gravityPad.png") ; break ;
+			case gravityCircle: surface = IMG_Load("assets/blocks/gravityCircle.png") ; break ;
+			case jumpPad: surface = IMG_Load("assets/blocks/jumpPad.png") ; break ;
+			//case jumpCircle: surface = IMG_Load("assets/blocks/jumpCircle.png") ; break ;
 		}
 		if (surface == NULL ){
 			fprintf(stderr, "Error: Cannot load file -> %s ", SDL_GetError());
