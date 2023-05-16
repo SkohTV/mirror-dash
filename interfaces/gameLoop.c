@@ -86,7 +86,7 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 
 		// Check if grounded, brings up above floor
 		grounded = 0;
-		if (YPosition > floorY + SAFETY_MARGIN) { // If below ground (then bring back up)
+		if (YPosition > floorY) { // If below ground (then bring back up)
 			YPosition = floorY;
 			grounded = 1;
 		} else if (YPosition == floorY) { // If at the ground
@@ -114,7 +114,7 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 				case square:
 					if (borderBot){ // Collision with bottom border of player and top border of square
 						grounded = 1; // We just grounded because square is safe
-						YPosition = tmpLL2->item->posY - BLOCK_SIZE;
+						YPosition = tmpLL2->item->posY - BLOCK_SIZE - SAFETY_MARGIN;
 					} else if (borderTop || borderRight){ alive = 0; }
 					break;
 				case spikeUp:
@@ -126,13 +126,17 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 			} tmpLL2 = tmpLL2->next;
 		}
 
+
 		if (grounded && accelerate <= 0){
 			accelerate = 0;
 		} else {
 			YPosition = YPosition - jumpTrajectory(&accelerate);
 		}
 
-
+		if (YPosition > floorY) { // If below ground (then bring back up)
+			YPosition = floorY;
+			grounded = 1;
+		}
 
 		//* RENDER LOOP
 		// Only render 1/2 frames (game will run at 30 fps visually, to reduce lag)
