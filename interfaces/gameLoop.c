@@ -1,12 +1,14 @@
 #include "gameLoop.h"
 #include "../primitives/core.h"
 #include "../primitives/fileCreator.h"
+#include "../primitives/playerMovements.h"
 
 
 void gameLoop(SDL_Renderer *renderer, char *mapDir){
 	// Constants
 	int floorY = 8*(WINDOW_HEIGHT/9); // Where floor starts
 	int frameDelay = 1000 / CAPPED_FPS; // Delay between frames
+	int DEFAULT_floorY = floorY; // Static, will never change 
 
 	// Gamestate
 	char running = 1;
@@ -16,8 +18,9 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 	int XPosition = WINDOW_WIDTH/2;
 	int YPosition = floorY;
 	int accelerate = 0;
+	char gravity = 1;
 	char grounded = 0;
-	char fakeGrounded = 0;
+	char spacePressed = 0;
 
 	// Handling
 	SDL_Event event; // Catch events
@@ -62,12 +65,15 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 
 
 		//* EVENT LOOP
+		spacePressed = 0;
+
 		while (SDL_PollEvent(&event)){ // Event Handling
 			switch (event.type){
 				case SDL_QUIT:
 					running = 0 ; break;
 				case SDL_KEYDOWN:
-					if (grounded || fakeGrounded){ accelerate = JUMP_FORCE; }
+					if (grounded){ playerJump(&accelerate, gravity); }
+					spacePressed = 1;
 					break;
 			}
 		}
@@ -77,7 +83,6 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 		//* PHYSIC LOOP
 		// You are not grounded anymore
 		grounded = 0;
-		fakeGrounded = 0;
 
 
 		// Move all items forward by 8 px
@@ -91,7 +96,7 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 		if (LL2){ liberationOfSpace(&LL2); }
 
 		// Check if grounded, brings up above floor
-		if (YPosition > floorY) { // If below ground (then bring back up)
+		if ((YPosition >= floorY && gravity == 1) || (YPosition <= floorY && gravity == -1)) { // If below ground (then bring back up)
 			YPosition = floorY;
 			grounded = 1;
 		} else if (YPosition == floorY) { // If at the ground
@@ -108,26 +113,24 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 			
 			// We save 3 bools for state of collision
 			//! This part of the code is messy, but modular conditions always are
-			char borderRight = ( (XPosition + BLOCK_SIZE) >= tmpLL2->item->posX ) &&
-			//YPosition > && YPosition + BLOCK_SIZE >= tmpLL2->item->posY ||
-			//YPosition <= tmpLL2->item->posY + BLOCK_SIZE && NULL
-			(((YPosition + BLOCK_SIZE) >= tmpLL2->item->posY && //(YPosition <= tmpLL2->item->posY)) ||
-			(YPosition + BLOCK_SIZE >= tmpLL2->item->posY + BLOCK_SIZE && (YPosition <= tmpLL2->item->posY + BLOCK_SIZE))) );
-			char borderTop = (YPosition <= (tmpLL2->item->posY + BLOCK_SIZE) && (YPosition + SAFETY_MARGIN) >= (tmpLL2->item->posY + BLOCK_SIZE));
-			char borderBot = ((YPosition + BLOCK_SIZE) <= tmpLL2->item->posY && (YPosition + BLOCK_SIZE + SAFETY_MARGIN) >= tmpLL2->item->posY);
+			char borderRight = ( ((XPosition + BLOCK_SIZE) >= tmpLL2->item->posX) && 
+			(((YPosition + BLOCK_SIZE) >= tmpLL2->item->posY && (YPosition <= tmpLL2->item->posY)) ||
+			(YPosition + BLOCK_SIZE >= tmpLL2->item->posY + BLOCK_SIZE && (YPosition <= (tmpLL2->item->posY + BLOCK_SIZE)))) );
+			char borderTop = ((YPosition < (tmpLL2->item->posY + BLOCK_SIZE)) && ((YPosition + BLOCK_SIZE) >= (tmpLL2->item->posY + BLOCK_SIZE)));
+			char borderBot = ((YPosition < tmpLL2->item->posY) && ((YPosition + BLOCK_SIZE) >= tmpLL2->item->posY));
+
 
 			// 2 other states, only used for specific checks
-			char borderLeft = ( (XPosition + BLOCK_SIZE) >= tmpLL2->item->posX &&
-			(((YPosition + BLOCK_SIZE) >= tmpLL2->item->posY && (YPosition <= tmpLL2->item->posY)) ||
-			(YPosition + BLOCK_SIZE >= tmpLL2->item->posY + BLOCK_SIZE && (YPosition <= tmpLL2->item->posY + BLOCK_SIZE))) );
-			//char lowHeightBorder = ;
-
+			char lowHeightBorderRight = ( ((XPosition + BLOCK_SIZE) >= (tmpLL2->item->posX + LOW_BLOCK_SIZE)) && 
+			(((YPosition + BLOCK_SIZE) >= (tmpLL2->item->posY + LOW_BLOCK_SIZE) && (YPosition <= (tmpLL2->item->posY + LOW_BLOCK_SIZE))) ||
+			((YPosition + BLOCK_SIZE) >= (tmpLL2->item->posY + BLOCK_SIZE) && (YPosition <= (tmpLL2->item->posY + BLOCK_SIZE)))) );
+			char lowBorderTop = (YPosition >= floorY-30 && gravity == 1) || (YPosition <= floorY+30 && gravity == -1);
 			// Switch depending on type & state
 			switch(tmpLL2->item->type){
 				case square:
 					if (borderBot){ // Collision with bottom border of player and top border of square
 						grounded = 1; // We just grounded because square is safe
-						YPosition = tmpLL2->item->posY - BLOCK_SIZE - SAFETY_MARGIN;
+						YPosition = tmpLL2->item->posY - BLOCK_SIZE;
 					} else if (borderTop || borderRight){ alive = 0; }
 					break;
 				case spikeUp:
@@ -136,28 +139,30 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 				case spikeRight:
 					if (borderTop || borderRight || borderBot){ alive = 0; }
 					break;
-				case gravityPad:
-					//if (lowHeightBorder && (borderRight || borderLeft)){ accelerate = JUMP_FORCE; }
+				case gravityPadUp:
+					if (lowBorderTop && lowHeightBorderRight){ reverseGravity(&gravity, &floorY, &accelerate, &grounded); }
 					break;
 				case gravityCircle:
-					printf("%d - %d | %d %d\n", borderTop, borderBot, borderRight, borderLeft);
-					if ((borderTop || borderBot) && (borderRight || borderLeft)){ fakeGrounded = 1; }
+					if ((borderTop || borderBot) && (borderRight) && (spacePressed)){ reverseGravity(&gravity, &floorY, &accelerate, &grounded); }
 					break;
-				case jumpPad:
+				case jumpPadUp:
+					if (lowBorderTop && lowHeightBorderRight){ playerJump(&accelerate, gravity); }
 					break;
 				case jumpCircle:
+					if ((borderTop || borderBot) && (borderRight) && (spacePressed)){ playerJump(&accelerate, gravity); }
 					break;
 			} tmpLL2 = tmpLL2->next;
 		}
 
 
-		if (grounded && accelerate <= 0){
+		if (grounded && (accelerate <= 0 && gravity == 1) && (accelerate >= 0 && gravity == -1)){
 			accelerate = 0;
 		} else {
-			YPosition = YPosition - jumpTrajectory(&accelerate);
+			YPosition = YPosition - jumpTrajectory(&accelerate, gravity);
 		}
 
-		if (YPosition > floorY) { // If below ground (then bring back up)
+
+		if ((YPosition > floorY && gravity == 1) || (YPosition < floorY && gravity == -1)) { // If below ground (then bring back up)
 			YPosition = floorY;
 			grounded = 1;
 		}
@@ -169,9 +174,9 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 			SDL_RenderClear(renderer);
 
 			// Render default assets (bg, cube...)
-			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560), floorY, 2560, 720);
-			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560 + 2560), floorY, 2560, 720);
-			renderImage(renderer, groundTexture, WINDOW_WIDTH+300, floorY+300, WINDOW_WIDTH+300, 300);
+			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560), DEFAULT_floorY, 2560, 720);
+			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560 + 2560), DEFAULT_floorY, 2560, 720);
+			renderImage(renderer, groundTexture, WINDOW_WIDTH+300, DEFAULT_floorY+300, WINDOW_WIDTH+300, 300);
 
 			// Render all items in LL2
 			tmpLL2 = LL2;

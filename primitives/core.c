@@ -63,9 +63,11 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 			case spikeDown: surface = IMG_Load("assets/blocks/spikeDown.png") ; break ;
 			case spikeLeft: surface = IMG_Load("assets/blocks/spikeLeft.png") ; break ;
 			case spikeRight: surface = IMG_Load("assets/blocks/spikeRight.png") ; break ;
-			case gravityPad: surface = IMG_Load("assets/blocks/gravityPad.png") ; break ;
+			case gravityPadUp: surface = IMG_Load("assets/blocks/gravityPadUp.png") ; break ;
+			case gravityPadDown: surface = IMG_Load("assets/blocks/gravityPadDown.png") ; break ;
 			case gravityCircle: surface = IMG_Load("assets/blocks/gravityCircle.png") ; break ;
-			case jumpPad: surface = IMG_Load("assets/blocks/jumpPad.png") ; break ;
+			case jumpPadUp: surface = IMG_Load("assets/blocks/jumpPadUp.png") ; break ;
+			case jumpPadDown: surface = IMG_Load("assets/blocks/jumpPadDown.png") ; break ;
 			//case jumpCircle: surface = IMG_Load("assets/blocks/jumpCircle.png") ; break ;
 		}
 		if (surface == NULL ){
@@ -87,11 +89,4 @@ void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int
 	if (texture == NULL){ printf("Error while rendering texture\n"); }
 	SDL_Rect dest = { X - W, Y - H, W, H }; // SDL_Rect define the position of the image
 	SDL_RenderCopy(renderer, texture, NULL, &dest); // Draw texture to renderer
-}
-
-
-//? We don't need to much of a complexe script, since it's just vertical jump
-int jumpTrajectory(int *accelerate){
-	(*accelerate) = (*accelerate) - 1;
-	return (*accelerate);
 }

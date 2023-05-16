@@ -7,11 +7,20 @@
 #include "tests/tests.h"
 
 
-//int main(int argc, char *argv[]){
-int main(){
-	//testsRun(2);
-	testsRun(3);
+int main(int argc, char *argv[]){
 
+	// CLI ARGUMENTS
+	for (int i = 0 ; i < argc ; i++){
+		switch (argv[i][0]){
+			case 't':
+				printf("Executing test : %d\n", argv[i][1] - 48);
+				testsRun(argv[i][1] - 48) ; break ;
+		}
+	}
 
+	// DEFAULT RUN WITHOUT ARGUMENTS
+	if (argc == 1){ }
+
+	// EXIT
 	return EXIT_SUCCESS;
 }

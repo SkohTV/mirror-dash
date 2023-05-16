@@ -52,14 +52,6 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape);
  */
 void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int W, int H);
 
-/**
- * @brief Return the plus or minus to the X position of the cube
- * 
- * @param accelerate 
- * @return int 
- */
-int jumpTrajectory(int *accelerate);
-
 
 
 // Close safety define

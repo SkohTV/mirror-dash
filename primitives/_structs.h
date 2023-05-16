@@ -6,11 +6,11 @@
 #define WINDOW_WIDTH 1280 //! DEPRECATED, BUT STILL USED
 #define WINDOW_HEIGHT 720 //! DEPRECATED, BUT STILL USED
 #define BLOCK_SIZE 80 // Size of a block, all blocks are same size, player included
+#define LOW_BLOCK_SIZE 60 // Size of pads
 #define SAFETY_MARGIN 20 // Safety margin for player when collision
 
 #define JUMP_FORCE 20 // Strength of jump of player
-
-#define CAPPED_FPS 60 // Max ticks, real max fps is half (so 30)
+#define CAPPED_FPS 60 // Max ticks, real max fps is half of it (so 30)
 
 
 // Global Includes
@@ -35,10 +35,12 @@ typedef enum _Shape{
 	spikeDown = 5,
 	spikeLeft = 6,
 	spikeRight = 7,
-	gravityPad = 8,
-	gravityCircle = 9,
-	jumpPad = 10,
-	jumpCircle = 11
+	gravityPadUp = 8,
+	gravityPadDown = 9,
+	gravityCircle = 10,
+	jumpPadUp = 11,
+	jumpPadDown = 12,
+	jumpCircle = 13
 } Shape;
 
 
