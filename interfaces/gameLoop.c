@@ -91,7 +91,7 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 			grounded = 1;
 		} else if (YPosition == floorY) { // If at the ground
 			grounded = 1;
-		} 
+		}
 
 		tmpLL2 = LL2;
 		while (tmpLL2){
