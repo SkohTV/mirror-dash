@@ -49,6 +49,13 @@ int testFiles();
  */
 int testFirstLevel();
 
+/**
+ * @brief First implementation of sound
+ * 
+ * @return int 
+ */
+int testSound();
+
 
 
 // Close safety define

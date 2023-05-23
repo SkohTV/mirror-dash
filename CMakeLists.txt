@@ -14,7 +14,6 @@ set(BANNED
 )
 
 
-
 # Compile flags
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wpedantic -g")
 
@@ -38,4 +37,4 @@ endforeach()
 add_executable(MyExecutable ${SOURCES_LIST} main.c)
 
 # Add the links
-target_link_libraries(MyExecutable PRIVATE SDL2 SDL2_image m)
+target_link_libraries(MyExecutable PRIVATE SDL2 SDL2_image SDL2_mixer m)

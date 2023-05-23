@@ -1,4 +1,5 @@
 #include "tests.h"
+#include <SDL2/SDL_mixer.h>
 
 
 
@@ -9,6 +10,7 @@ void testsRun(char testName){
 		case 1: printf("Test Linked Lists : %s\n", testLinkedLists() ? "failure":"success") ; break ;
 		case 2: printf("Test File I/O : %s\n", testFiles() ? "failure":"success") ; break ;
 		case 3: printf("Test First Level : %s\n", testFirstLevel() ? "failure":"success") ; break ;
+		case 4: printf("Test Core Sound : %s\n", testSound() ? "failure":"success") ; break ;
 	}
 }
 
@@ -77,4 +79,33 @@ int testFirstLevel(){
 	gameLoop(renderer, "assets/maps/tuto-first");
 	closeSDL(window, renderer);
 	return EXIT_SUCCESS;
+}
+
+
+int testSound(){
+	int result = 0;
+	int flags = MIX_INIT_MP3;
+
+	if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+		printf("Failed to init SDL\n");
+		exit(1);
+	}
+
+	if (flags != (result = Mix_Init(flags))) {
+		printf("Could not initialize mixer (result: %d).\n", result);
+		printf("Mix_Init: %s\n", Mix_GetError());
+		exit(1);
+	}
+
+	Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+	Mix_Music *music = Mix_LoadMUS("assets/maps/tuto-first/music.mp3");
+	Mix_PlayMusic(music, 1);
+
+	while (!SDL_QuitRequested()) {
+		SDL_Delay(250);
+	}
+
+	Mix_FreeMusic(music);
+	SDL_Quit();
+	return 0;
 }

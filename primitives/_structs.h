@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 
 
 // Structs & Enums
@@ -40,7 +41,8 @@ typedef enum _Shape{
 	gravityCircle = 10,
 	jumpPadUp = 11,
 	jumpPadDown = 12,
-	jumpCircle = 13
+	jumpCircle = 13,
+	playButton = 99,
 } Shape;
 
 

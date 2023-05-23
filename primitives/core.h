@@ -52,6 +52,13 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape);
  */
 void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int W, int H);
 
+/**
+ * @brief Load the sound from a file
+ * 
+ * @return int 
+ */
+int loadSound();
+
 
 
 // Close safety define
