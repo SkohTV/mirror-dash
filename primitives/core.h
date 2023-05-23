@@ -63,8 +63,23 @@ int initSound();
  * 
  * @return int 
  */
-int loadSound(char *path);
+Mix_Music *loadSound(char *path);
 
+/**
+ * @brief 
+ * 
+ * @param music 
+ * @return int 
+ */
+int playSound(Mix_Music *music);
+
+/**
+ * @brief 
+ * 
+ * @param music 
+ * @return int 
+ */
+int freeSound(Mix_Music *music);
 
 
 #endif

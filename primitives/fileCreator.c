@@ -28,13 +28,18 @@ void createFile(){
 
 	// Obj 5
 	putc(gravityCircle, fp);
-	putw(540, fp);
+	putw(340, fp);
 	putw(360, fp);
 
 	// Obj 6
 	putc(jumpPadUp, fp);
 	putw(640, fp);
 	putw(540, fp);
+
+	// Obj 7
+	putc(jumpCircle, fp);
+	putw(540, fp);
+	putw(640, fp);
 
 	fclose(fp);
 }

@@ -58,11 +58,21 @@ typedef struct _ItemEntity{
 
 
 //* Linked List
-// Make ithe use of many ItemEntity easier and way faster
+// Make the use of many ItemEntity easier and way faster
 typedef struct _LinkedList{
 	struct _ItemEntity *item;
 	struct _LinkedList *next;
 } LinkedList;
+
+
+//* Particle Linked List
+// Store all particles for the player
+typedef struct _ItemParticle{
+	int posX;
+	int posY;
+	struct _ItemParticle *next;
+} ItemParticle;
+
 
 
 // Close safety define

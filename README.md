@@ -15,6 +15,17 @@ Drag Management :
     - Nothing ?
 
 
+Particules
+Liste chainée
+A chaque loop :
+Si pas en saut :
+- Ajout au sommet de la file
+- On dessine tout en descend la file
+- On drop la dernière sans la dessine
+- Contion de drop : + de X particules
+- Spawn à X hauteur (plus en bas, moins en haut)
+
+
 
 ### Ecran principal
 - [ ] PLAY -> Écran de niveaux (Petit descriptif des niveaux)
@@ -24,10 +35,11 @@ Drag Management :
 - [x] Sol minimal à X hauteur, et il peut monter selon l’obstacle sur lequel on glisse
 - [x] Apparence (bg bouge lentement, sol bouge rapidement)
 - [x] Différent obstacle/trucs (blocks, piques, pad, rond magique, reverse)
-- [ ] Musique
+- [x] Musique
 - [ ] Particules (pour la parabole)
 - [ ] Début / fin
 - [ ] Barre de % du niveau
+- [ ] Retourner personnage quand gravité inversée
 ### Paramètres
 - [ ] Skins
 - [ ] Volume

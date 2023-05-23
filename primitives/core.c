@@ -68,7 +68,7 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 			case gravityCircle: surface = IMG_Load("assets/blocks/gravityCircle.png") ; break ;
 			case jumpPadUp: surface = IMG_Load("assets/blocks/jumpPadUp.png") ; break ;
 			case jumpPadDown: surface = IMG_Load("assets/blocks/jumpPadDown.png") ; break ;
-			//case jumpCircle: surface = IMG_Load("assets/blocks/jumpCircle.png") ; break ;
+			case jumpCircle: surface = IMG_Load("assets/blocks/jumpCircle.png") ; break ;
 		}
 		if (surface == NULL ){
 			fprintf(stderr, "Error: Cannot load file -> %s ", SDL_GetError());
@@ -110,10 +110,20 @@ int initSound(){
 }
 
 
-int loadSound(char *path){
+Mix_Music *loadSound(char *path){
 	Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
 	Mix_Music *music = Mix_LoadMUS(path);
+	return music;
+}
+
+
+int playSound(Mix_Music *music){
 	Mix_PlayMusic(music, 1);
+	return EXIT_SUCCESS;
+}
+
+
+int freeSound(Mix_Music *music){
 	Mix_FreeMusic(music);
 	return EXIT_SUCCESS;
 }

@@ -84,5 +84,10 @@ int testFirstLevel(){
 
 
 int testSound(){
-	return EXIT_SUCCESS;
+	initSound();
+
+	loadSound("assets/maps/tuto-first/music.mp3");
+	
+	SDL_Quit();
+	return 0;
 }
