@@ -48,6 +48,11 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 		tmpLL2 = tmpLL2->next;
 	}
 
+	// Init the sound
+	char *soundFileUrl = malloc(strlen(mapDir) + strlen("music.mp3") + 1);
+	sprintf(levelFileUrl, "%s/music.mp3", mapDir);
+	loadSound(soundFileUrl);
+
 
 
 	while (running) {

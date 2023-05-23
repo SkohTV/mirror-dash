@@ -90,3 +90,30 @@ void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int
 	SDL_Rect dest = { X - W, Y - H, W, H }; // SDL_Rect define the position of the image
 	SDL_RenderCopy(renderer, texture, NULL, &dest); // Draw texture to renderer
 }
+
+
+int initSound(){
+	int result = 0;
+
+	if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+		printf("Failed to init SDL\n");
+		return EXIT_FAILURE;
+	}
+
+	if (MIX_INIT_MP3 != (result = Mix_Init(MIX_INIT_MP3))) {
+		printf("Could not initialize mixer (result: %d)\n", result);
+		printf("Mix_Init: %s\n", Mix_GetError());
+		return EXIT_FAILURE;
+	}
+
+	return EXIT_SUCCESS;
+}
+
+
+int loadSound(char *path){
+	Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+	Mix_Music *music = Mix_LoadMUS(path);
+	Mix_PlayMusic(music, 1);
+	Mix_FreeMusic(music);
+	return EXIT_SUCCESS;
+}
