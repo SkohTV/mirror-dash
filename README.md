@@ -1,36 +1,17 @@
-MEMO : map.level :
-- 1 char type
-- 1 int posY
-- 1 int summon
-
-Drag Management : 
- - Input parameters : 
-    - posX constanstly
-    - posY ""
-    - Chased Element
-    - custom drag choosen ?
- - Function's actions :
-    - Paint a drag behind the gliding block
- - Output parameters : 
-    - Nothing ?
+# Mirror Dash
 
 
-Particules
-Liste chainée
-A chaque loop :
-Si pas en saut :
-- Ajout au sommet de la file
-- On dessine tout en descend la file
-- On drop la dernière sans la dessine
-- Contion de drop : + de X particules
-- Spawn à X hauteur (plus en bas, moins en haut)
+## Cahier des charges
 
-
-
-### Ecran principal
-- [ ] PLAY -> Écran de niveaux (Petit descriptif des niveaux)
+### Ecran principal - [Robin](https://github.com/mkkuu)
+- [ ] Bouton play
+- [ ] Écran de niveaux (Petit descriptif des niveaux + choix)
 - [ ] Skins (+ traînée / skins premium)
-### Niveaux
+- [ ] Changement du volume
+- [ ] Faux gameplay en background
+- [ ] Sélection via les touches directionnelles
+
+### Niveaux - [Noé](https://github.com/SkohTV)
 - [x] L’arrière plan scroll, le cube reste fixe horizontalement, pas verticalement
 - [x] Sol minimal à X hauteur, et il peut monter selon l’obstacle sur lequel on glisse
 - [x] Apparence (bg bouge lentement, sol bouge rapidement)
@@ -40,42 +21,53 @@ Si pas en saut :
 - [ ] Début / fin
 - [ ] Barre de % du niveau
 - [x] Retourner personnage quand gravité inversée
-### Paramètres
-- [ ] Skins
-- [ ] Volume
+- [ ] Fichiers de niveau compilé et encodé
 
 
-
-Mémo : ajouter block barre de fin dans le level
-
+<br>
 
 
+## Structure du projet
+
+```
+├── README.md           # Documentation du code (vous êtes ici)
+├── make.sh             # Script qui build automatiquement le projet
+├── CMakeLists.txt      # Paramètres de build du projet
+├── main.c              # Point d'entrée du code du projet
+├── .editorconfig       # Configuration unifiée pour les éditeurs
+├── .gitignore          # Fichiers à ignorer pour git
+├── build/              # Temporaire, pour cache les fichiers de build
+├── primitives/         # Fonction primaires et data structures
+├── interfaces/         # Encapsulation des parties du jeu
+├── tests/              # Tests que des parties du code sont tjr fonctionnelles
+└── assets/             # Assets pour le projet
+    ├── blocks/         # Blocs et obstacles chargés en jeu
+    ├── gui/            # Images pour le menu principal
+    ├── maps/           # Répertoires de levels
+    └── skins/          # Skins pour le joueur en game
+```
 
 
-10min de présentation, 5min de questions
-
-1. Présentation générale (en choisir un) -> 2 min
-- Démo du jeu
-- Vidéo du jeu
-- ppt + capture d'écran
-
-1. Présentation de l'architecture et de la répartition du travail -> 2 min
-
-2. Présentation de fonctionnalités intéressante
-- Personne 1 -> 3min
-- Personne 2 -> 3min
-
-1. Conclusion
+<br>
 
 
+## Installation
+
+### Build
+Pour build ce projet, vous aurez besoin de :
+
+- WSL ou Linux
+- gcc (GNU C Compiler)
+- cmake (Makefile Generator)
+
+Ainsi que des librairies :
+- <SDL2/SDL.h> (`sudo apt-get install libsdl2-dev`)
+- <SDL2/SDL_image.h> (`sudo apt-get install libsdl2-image-dev`)
+- <SDL2/SDL_mixer.h> (`sudo apt-get install libsdl2-mixer-dev`)
+- <SDL2/SDL_ttf.h> (`sudo apt-get install libsdl2-ttf-dev`)
+
+Puis lancer le fichier `make.sh`, il s'occupe de tout
 
 
-Présentation (vidéo du jeu) et explication du jeu
-
-Structure de fichiers
-Management Github
-Cmake
-
-1. Double liste chaines de management de niveau
-
-2. Strcutre des niveaux (fichiers)
+### Jouer
+Vous pouvez soit télécharger une release **[ici](https://github.com/SkohTV/Mirror-dash/releases)**, ou le build vous même.
