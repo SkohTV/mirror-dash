@@ -50,7 +50,7 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape);
  * @param W 
  * @param H 
  */
-void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int W, int H);
+void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int W, int H, char flip);
 
 /**
  * @brief Init the sound engine

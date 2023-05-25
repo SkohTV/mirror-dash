@@ -190,14 +190,14 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 			SDL_RenderClear(renderer);
 
 			// Render default assets (bg, cube...)
-			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560), DEFAULT_floorY, 2560, 720);
-			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560 + 2560), DEFAULT_floorY, 2560, 720);
-			renderImage(renderer, groundTexture, WINDOW_WIDTH+300, DEFAULT_floorY+300, WINDOW_WIDTH+300, 300);
+			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560), DEFAULT_floorY, 2560, 720, 0);
+			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560 + 2560), DEFAULT_floorY, 2560, 720, 0);
+			renderImage(renderer, groundTexture, WINDOW_WIDTH+300, DEFAULT_floorY+300, WINDOW_WIDTH+300, 300, 0);
 
 			// Render all items in LL2
 			tmpLL2 = LL2;
 			while (tmpLL2){
-				renderImage(renderer, tmpLL2->item->texture, tmpLL2->item->posX, tmpLL2->item->posY, BLOCK_SIZE, BLOCK_SIZE);
+				renderImage(renderer, tmpLL2->item->texture, tmpLL2->item->posX, tmpLL2->item->posY, BLOCK_SIZE, BLOCK_SIZE, 0);
 				tmpLL2 = tmpLL2->next;
 			}
 
@@ -209,7 +209,7 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 			SDL_SetRenderDrawColor(renderer, 117, 117, 117, 255);
 
 			// Draw cube at the end
-			renderImage(renderer, cubeTexture, XPosition, YPosition, BLOCK_SIZE, BLOCK_SIZE);
+			renderImage(renderer, cubeTexture, XPosition, YPosition, BLOCK_SIZE, BLOCK_SIZE, (gravity < 0));
 
 			// Render the renderer
 			SDL_RenderPresent(renderer);

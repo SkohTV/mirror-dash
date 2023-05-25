@@ -39,10 +39,14 @@ Si pas en saut :
 - [x] Particules (pour la parabole)
 - [ ] Début / fin
 - [ ] Barre de % du niveau
-- [ ] Retourner personnage quand gravité inversée
+- [x] Retourner personnage quand gravité inversée
 ### Paramètres
 - [ ] Skins
 - [ ] Volume
+
+
+
+Mémo : ajouter block barre de fin dans le level
 
 
 
@@ -55,13 +59,13 @@ Si pas en saut :
 - Vidéo du jeu
 - ppt + capture d'écran
 
-2. Présentation de l'architecture et de la répartition du travail -> 2 min
+1. Présentation de l'architecture et de la répartition du travail -> 2 min
 
-3. Présentation de fonctionnalités intéressante
+2. Présentation de fonctionnalités intéressante
 - Personne 1 -> 3min
 - Personne 2 -> 3min
 
-4. Conclusion
+1. Conclusion
 
 
 

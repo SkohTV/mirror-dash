@@ -85,11 +85,11 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 }
 
 
-void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int W, int H){
+void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int W, int H, char flip){
 	if (texture == NULL){ printf("Error while rendering texture\n"); }
 	SDL_Rect dest = { X - W, Y - H, W, H }; // SDL_Rect define the position of the image
-	SDL_RenderCopy(renderer, texture, NULL, &dest); // Draw texture to renderer
-	//SDL_RenderCopyEx(renderer, texture, &dest, &dest, 0, 0, SDL_FLIP_NONE); // Draw texture to renderer
+	char flag = flip ? SDL_FLIP_VERTICAL : SDL_FLIP_NONE; // Set flip flag
+	SDL_RenderCopyEx(renderer, texture, NULL, &dest, 0.0, NULL, flag); // Draw texture to renderer
 }
 
 
