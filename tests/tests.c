@@ -25,8 +25,8 @@ int testCore(){
 	SDL_Renderer *renderer = NULL;
 	createWindow(&window, &renderer);
 	initSound();
-	SDL_SetRenderDrawColor(renderer, 117, 117, 117, 255);
 	SDL_RenderClear(renderer);
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	gameLoop(renderer, "assets/maps/tuto-first");
 	return EXIT_SUCCESS;
 }

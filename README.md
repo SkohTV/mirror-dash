@@ -36,10 +36,42 @@ Si pas en saut :
 - [x] Apparence (bg bouge lentement, sol bouge rapidement)
 - [x] Différent obstacle/trucs (blocks, piques, pad, rond magique, reverse)
 - [x] Musique
-- [ ] Particules (pour la parabole)
+- [x] Particules (pour la parabole)
 - [ ] Début / fin
 - [ ] Barre de % du niveau
 - [ ] Retourner personnage quand gravité inversée
 ### Paramètres
 - [ ] Skins
 - [ ] Volume
+
+
+
+
+
+10min de présentation, 5min de questions
+
+1. Présentation générale (en choisir un) -> 2 min
+- Démo du jeu
+- Vidéo du jeu
+- ppt + capture d'écran
+
+2. Présentation de l'architecture et de la répartition du travail -> 2 min
+
+3. Présentation de fonctionnalités intéressante
+- Personne 1 -> 3min
+- Personne 2 -> 3min
+
+4. Conclusion
+
+
+
+
+Présentation (vidéo du jeu) et explication du jeu
+
+Structure de fichiers
+Management Github
+Cmake
+
+1. Double liste chaines de management de niveau
+
+2. Strcutre des niveaux (fichiers)
