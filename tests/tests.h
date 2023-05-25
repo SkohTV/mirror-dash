@@ -57,6 +57,13 @@ int testFirstLevel();
 int testSound();
 
 
+/**
+ * @brief Test for the menu
+ * 
+ * @return int 
+ */
+int testMenu();
+
 
 // Close safety define
 #endif

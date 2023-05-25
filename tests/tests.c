@@ -11,6 +11,7 @@ void testsRun(char testName){
 		case 2: printf("Test File I/O : %s\n", testFiles() ? "failure":"success") ; break ;
 		case 3: printf("Test First Level : %s\n", testFirstLevel() ? "failure":"success") ; break ;
 		case 4: printf("Test Core Sound : %s\n", testSound() ? "failure":"success") ; break ;
+		case 5: printf("Test Menu : %s\n", testMenu() ? "failure":"success") ; break ;
 	}
 }
 
@@ -90,4 +91,16 @@ int testSound(){
 	
 	SDL_Quit();
 	return 0;
+}
+
+int testMenu(){
+	startSDL();
+	SDL_Window *window = NULL;
+	SDL_Renderer *renderer = NULL;
+	createWindow(&window, &renderer);
+	SDL_SetRenderDrawColor(renderer, 120, 120, 120, 255);
+	SDL_RenderClear(renderer);
+	
+	closeSDL(window, renderer);
+	return EXIT_SUCCESS;
 }
