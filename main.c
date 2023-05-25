@@ -8,7 +8,6 @@
 
 
 int main(int argc, char *argv[]){
-
 	// CLI ARGUMENTS
 	for (int i = 0 ; i < argc ; i++){
 		switch (argv[i][0]){

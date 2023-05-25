@@ -36,7 +36,7 @@ Si pas en saut :
 - [x] Apparence (bg bouge lentement, sol bouge rapidement)
 - [x] Différent obstacle/trucs (blocks, piques, pad, rond magique, reverse)
 - [x] Musique
-- [ ] Particules (pour la parabole)
+- [x] Particules (pour la parabole)
 - [ ] Début / fin
 - [ ] Barre de % du niveau
 - [ ] Retourner personnage quand gravité inversée

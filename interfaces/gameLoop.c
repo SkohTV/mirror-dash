@@ -2,6 +2,7 @@
 #include "../primitives/core.h"
 #include "../primitives/fileCreator.h"
 #include "../primitives/playerMovements.h"
+#include "../primitives/particles.h"
 
 
 void gameLoop(SDL_Renderer *renderer, char *mapDir){
@@ -47,6 +48,15 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 		tmpLL2->item->texture = loadImage(renderer, tmpLL2->item->type);
 		tmpLL2 = tmpLL2->next;
 	}
+
+	// Linked List for particles
+	ItemParticle *particle = NULL;
+	int particleCount = 0;
+	//for (int i = 0; i < 10 ; i++){
+	//	Ppush(&particle, i*10, i*10);
+	//	particleCount++;
+	//}
+
 
 	// Init the sound
 	char *soundFileUrl = malloc(strlen(mapDir) + strlen("music.mp3") + 1);
@@ -190,6 +200,13 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 				renderImage(renderer, tmpLL2->item->texture, tmpLL2->item->posX, tmpLL2->item->posY, BLOCK_SIZE, BLOCK_SIZE);
 				tmpLL2 = tmpLL2->next;
 			}
+
+			SDL_SetRenderDrawColor(renderer, 0, 162, 232, 120);
+			if (!grounded) Ppush(&particle, XPosition - BLOCK_SIZE, YPosition - (10 * gravity));
+			else Ppush(&particle, 0, 0);
+			particleCount++;
+			Pdraw(renderer, &particle, &particleCount);
+			SDL_SetRenderDrawColor(renderer, 117, 117, 117, 255);
 
 			// Draw cube at the end
 			renderImage(renderer, cubeTexture, XPosition, YPosition, BLOCK_SIZE, BLOCK_SIZE);
