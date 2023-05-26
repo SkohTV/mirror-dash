@@ -69,6 +69,12 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 			case jumpPadUp: surface = IMG_Load("assets/blocks/jumpPadUp.png") ; break ;
 			case jumpPadDown: surface = IMG_Load("assets/blocks/jumpPadDown.png") ; break ;
 			case jumpCircle: surface = IMG_Load("assets/blocks/jumpCircle.png") ; break ;
+			case playIcon: surface = IMG_Load("assets/gui/menu_playIcon.png") ; break ;
+			case settingsIcon: surface = IMG_Load("assets/gui/menu_settingsIcon.png") ; break ;
+			case skinIcon: surface = IMG_Load("assets/gui/menu_skinIcon.png") ; break ;
+			case SelectorPlayIcon: surface = IMG_Load("assets/gui/selectorOnPlayIcon.png") ; break ;
+			case SelectorSettingsIcon: surface = IMG_Load("assets/gui/selectorOnSettingsIcon.png") ; break ;
+			case SelectorSkinIcon: surface = IMG_Load("assets/gui/selectorOnSkinIcon.png") ; break ;
 		}
 		if (surface == NULL ){
 			fprintf(stderr, "Error: Cannot load file -> %s ", SDL_GetError());
