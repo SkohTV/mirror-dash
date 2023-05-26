@@ -22,7 +22,6 @@
 #include <SDL2/SDL_mixer.h>
 
 
-
 // Structs & Enums
 // A small paragraph of comment describe their use
 
@@ -43,10 +42,13 @@ typedef enum _Shape{
 	jumpPadUp = 11,
 	jumpPadDown = 12,
 	jumpCircle = 13,
-
 	endOfGame = 70,
-
-	playButton = 99,
+	SelectorSkinIcon = 94,
+	SelectorSettingsIcon = 95,
+	SelectorPlayIcon = 96,
+	skinIcon = 97,
+	settingsIcon = 98,
+	playIcon = 99,
 } Shape;
 
 
@@ -76,7 +78,6 @@ typedef struct _ItemParticle{
 	int posY;
 	struct _ItemParticle *next;
 } ItemParticle;
-
 
 
 // Close safety define

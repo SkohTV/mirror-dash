@@ -10,6 +10,9 @@
 
 // Functions
 /***/
+
+void menuState();
+
 void test();
 
 

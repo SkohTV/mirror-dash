@@ -1,5 +1,5 @@
 #include "tests.h"
-
+#include "../interfaces/mainMenu.h"
 
 
 //* Global tester, run the function to test a module
@@ -99,7 +99,7 @@ int testMenu(){
 	createWindow(&window, &renderer);
 	SDL_SetRenderDrawColor(renderer, 120, 120, 120, 255);
 	SDL_RenderClear(renderer);
-	
+	menuState(renderer);
 	closeSDL(window, renderer);
 	return EXIT_SUCCESS;
 }
