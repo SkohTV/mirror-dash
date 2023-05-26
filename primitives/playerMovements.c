@@ -19,6 +19,6 @@ void reverseGravity(char *gravity, int *floorY, int *accelerate, char *grounded)
 	(*accelerate) = (*gravity) * 2;
 	(*grounded) = 0;
 	
-	if ((*gravity) == 1){ (*floorY) = 8*(WINDOW_HEIGHT/9); }
-	else { (*floorY) = 100; }
+	if ((*gravity) == 1){ (*floorY) = 8*(WINDOW_HEIGHT/9)+150; }
+	else { (*floorY) = 150; }
 }

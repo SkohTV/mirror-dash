@@ -26,7 +26,7 @@ void Pdraw(SDL_Renderer *renderer, ItemParticle **list, int *pCount){
 			SDL_RenderFillRect(renderer, &rect);
 		}
 		Pdraw(renderer, &((*list)->next), pCount);
-		(*list)->posX -= 8;
+		(*list)->posX -= 16;
 	} else while ((*pCount) > 20){
 		Pdrop(list);
 		(*pCount)--;

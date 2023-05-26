@@ -43,6 +43,9 @@ typedef enum _Shape{
 	jumpPadUp = 11,
 	jumpPadDown = 12,
 	jumpCircle = 13,
+
+	endOfGame = 70,
+
 	playButton = 99,
 } Shape;
 

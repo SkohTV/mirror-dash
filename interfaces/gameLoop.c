@@ -7,7 +7,7 @@
 
 void gameLoop(SDL_Renderer *renderer, char *mapDir){
 	// Constants
-	int floorY = 8*(WINDOW_HEIGHT/9); // Where floor starts
+	int floorY = 8*(WINDOW_HEIGHT/9)+150; // Where floor starts
 	int frameDelay = 1000 / CAPPED_FPS; // Delay between frames
 	int DEFAULT_floorY = floorY; // Static, will never change 
 
@@ -167,11 +167,13 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 				case jumpCircle:
 					if ((borderTop || borderBot) && (borderRight) && (spacePressed)){ playerJump(&accelerate, gravity); }
 					break;
+				//case endOfGame:
+
 			} tmpLL2 = tmpLL2->next;
 		}
 
 
-		if (grounded && (accelerate <= 0 && gravity == 1) && (accelerate >= 0 && gravity == -1)){
+		if (grounded && ((accelerate <= 0 && gravity == 1) || (accelerate >= 0 && gravity == -1))){
 			accelerate = 0;
 		} else {
 			YPosition = YPosition - jumpTrajectory(&accelerate, gravity);
@@ -184,6 +186,7 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 		}
 
 		//* RENDER LOOP
+
 		// Only render 1/2 frames (game will run at 30 fps visually, to reduce lag)
 		if (totalFrames % 2){
 			// Clear renderer
@@ -193,6 +196,7 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560), DEFAULT_floorY, 2560, 720, 0);
 			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560 + 2560), DEFAULT_floorY, 2560, 720, 0);
 			renderImage(renderer, groundTexture, WINDOW_WIDTH+300, DEFAULT_floorY+300, WINDOW_WIDTH+300, 300, 0);
+			renderImage(renderer, groundTexture, WINDOW_WIDTH+300, 70, WINDOW_WIDTH+300, 300, 1);
 
 			// Render all items in LL2
 			tmpLL2 = LL2;
@@ -201,6 +205,8 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 				tmpLL2 = tmpLL2->next;
 			}
 
+
+			// Draw particles
 			SDL_SetRenderDrawColor(renderer, 0, 162, 232, 120);
 			if (!grounded) Ppush(&particle, XPosition - BLOCK_SIZE, YPosition - (10 * gravity));
 			else Ppush(&particle, 0, 0);
@@ -226,4 +232,9 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 		// If you lost, we stop the loop and so the game
 		if (!alive) { running = 0; }
 	}
+
+
+	//* END OF GAME
+	printf("Alive : %d\nRunning : %d\n", alive, running);
+
 }

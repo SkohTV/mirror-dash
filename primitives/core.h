@@ -66,7 +66,7 @@ int initSound();
 Mix_Music *loadSound(char *path);
 
 /**
- * @brief 
+ * @brief Play the sound object
  * 
  * @param music 
  * @return int 
@@ -74,7 +74,7 @@ Mix_Music *loadSound(char *path);
 int playSound(Mix_Music *music);
 
 /**
- * @brief 
+ * @brief Free the sound object
  * 
  * @param music 
  * @return int 

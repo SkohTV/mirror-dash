@@ -23,23 +23,38 @@ void createFile(){
 
 	// Obj 4
 	putc(gravityPadUp, fp);
-	putw(640, fp);
+	putw(790, fp);
 	putw(180, fp);
 
 	// Obj 5
 	putc(gravityCircle, fp);
 	putw(340, fp);
+	putw(200, fp);
+
+	// Obj 8
+	putc(spikeUp, fp);
+	putw(790, fp);
 	putw(360, fp);
+
+	// Obj 9
+	putc(square, fp);
+	putw(790, fp);
+	putw(440, fp);
+
+	// Obj 10
+	putc(square, fp);
+	putw(790, fp);
+	putw(480, fp);
 
 	// Obj 6
 	putc(jumpPadUp, fp);
-	putw(640, fp);
+	putw(790, fp);
 	putw(540, fp);
 
 	// Obj 7
 	putc(jumpCircle, fp);
 	putw(540, fp);
-	putw(640, fp);
+	putw(560, fp);
 
 	fclose(fp);
 }
