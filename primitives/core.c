@@ -6,8 +6,12 @@
 // This should never crash under any circumstance
 // Else, that would mean big problems
 void startSDL(){
-	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+	if (SDL_Init(SDL_INIT_VIDEO) != 0){
 		fprintf(stderr, "Error: Cannot init SDL -> %s\n", SDL_GetError());
+		exit(EXIT_FAILURE);
+	}
+	if (Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640) != 0){
+		fprintf(stderr, "Error: Cannot init SDL_mixer -> %s\n", Mix_GetError());
 		exit(EXIT_FAILURE);
 	}
 }
@@ -35,15 +39,11 @@ int createWindow(SDL_Window **window, SDL_Renderer **renderer){
 
 //! Closes the window
 int closeSDL(SDL_Window *window, SDL_Renderer *renderer){
-	if(NULL != renderer){ // Destroy renderer here
-		SDL_DestroyRenderer(renderer);
-	}	 else { return EXIT_FAILURE; }
-	if(NULL != window){ // Destroy window here
-		SDL_DestroyWindow(window);
-		SDL_Quit(); // Closes here
-		printf("Quit\n");
-		return EXIT_SUCCESS;
-	} else { return EXIT_FAILURE; }
+	MixQuit(); // Kill audio
+	SDL_DestroyRenderer(renderer); // Kill renderer
+	SDL_DestroyWindow(window); // Kill window
+	SDL_Quit(); // Kill subsystems
+	return EXIT_SUCCESS;
 }
 
 
@@ -93,7 +93,7 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 
 
 void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int W, int H, char flip){
-	if (texture == NULL){ printf("Error while rendering texture\n"); }
+	if (texture == NULL){ fprintf(stderr, "Error while rendering texture\n"); }
 	SDL_Rect dest = { X - W, Y - H, W, H }; // SDL_Rect define the position of the image
 	char flag = flip ? SDL_FLIP_VERTICAL : SDL_FLIP_NONE; // Set flip flag
 	SDL_RenderCopyEx(renderer, texture, NULL, &dest, 0.0, NULL, flag); // Draw texture to renderer
@@ -104,13 +104,13 @@ int initSound(){
 	int result = 0;
 
 	if (SDL_Init(SDL_INIT_AUDIO) < 0) {
-		printf("Failed to init SDL\n");
+		fprintf(stderr, "Failed to init SDL\n");
 		return EXIT_FAILURE;
 	}
 
 	if (MIX_INIT_MP3 != (result = Mix_Init(MIX_INIT_MP3))) {
-		printf("Could not initialize mixer (result: %d)\n", result);
-		printf("Mix_Init: %s\n", Mix_GetError());
+		fprintf(stderr, "Could not initialize mixer (result: %d)\n", result);
+		fprintf(stderr, "Mix_Init: %s\n", Mix_GetError());
 		return EXIT_FAILURE;
 	}
 
@@ -119,9 +119,7 @@ int initSound(){
 
 
 Mix_Music *loadSound(char *path){
-	Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
 	Mix_Music *music = Mix_LoadMUS(path);
-	Mix_CloseAudio();
 	return music;
 }
 
