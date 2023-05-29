@@ -78,6 +78,9 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 			case SelectorSkinIcon: surface = IMG_Load("assets/gui/selectorOnSkinIcon.png") ; break ;
 			case winIcon: surface = IMG_Load("assets/gui/win.png") ; break ;
 			case loseIcon: surface = IMG_Load("assets/gui/lose.png") ; break ;
+			case skin1: surface = IMG_Load("assets/skins/skin1.png") ; break ;
+			case skin2: surface = IMG_Load("assets/skins/skin2.png") ; break ;
+			case skin3: surface = IMG_Load("assets/skins/skin3.png") ; break ;
 		}
 		if (surface == NULL ){
 			fprintf(stderr, "Error: Cannot load file -> %s ", SDL_GetError());
