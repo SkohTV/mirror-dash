@@ -8,6 +8,12 @@
 
 
 int main(int argc, char *argv[]){
+	printf("%d\n", 0 + (0<<1));
+	printf("%d\n", 0 + (1<<1));
+	printf("%d\n", 1 + (0<<1));
+	printf("%d\n", 1 + (1<<1));
+
+
 	// CLI ARGUMENTS
 	for (int i = 0 ; i < argc ; i++){
 		switch (argv[i][0]){

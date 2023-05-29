@@ -18,10 +18,10 @@
 - [x] Différent obstacle/trucs (blocks, piques, pad, rond magique, reverse)
 - [x] Musique
 - [x] Particules (pour la parabole)
-- [ ] Début / fin
-- [ ] Barre de % du niveau
+- [x] Début / fin
+- [x] Barre de % du niveau
 - [x] Retourner personnage quand gravité inversée
-- [ ] Fichiers de niveau compilé et encodé
+- [x] Fichiers de niveau compilé et encodé
 
 
 <br>

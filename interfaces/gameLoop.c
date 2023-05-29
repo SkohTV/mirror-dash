@@ -5,7 +5,7 @@
 #include "../primitives/particles.h"
 
 
-void gameLoop(SDL_Renderer *renderer, char *mapDir){
+int gameLoop(SDL_Renderer *renderer, char *mapDir){
 	// Constants
 	int floorY = 8*(WINDOW_HEIGHT/9)+150; // Where floor starts
 	int frameDelay = 1000 / CAPPED_FPS; // Delay between frames
@@ -14,6 +14,7 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 	// Gamestate
 	char running = 1;
 	char alive = 1;
+	char close = 0;
 
 	// Physics
 	int XPosition = WINDOW_WIDTH/2;
@@ -48,9 +49,9 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 	tmpLL2 = LL1;
 	while (tmpLL2){
 		tmpLL2->item->texture = loadImage(renderer, tmpLL2->item->type);
-		end = tmpLL2->item->summon + 87; // 87 is frames between summon time and collision
+		end = tmpLL2->item->summon + 104; // 100 is frames between summon time and collision
 		tmpLL2 = tmpLL2->next;
-	} printf("End: %d\n", end);
+	}
 
 	// Linked List for particles
 	ItemParticle *particle = NULL;
@@ -68,6 +69,11 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 	while (running) {
 		//* PRE-PROCESS
 		frameStart = SDL_GetTicks();
+
+		if (totalFrames >= end){
+			running = 0;
+			break;
+		}
 
 		// If summon time, then pass to next list and check next item
 		// Else we break, cause case won't be met latter on (check readme diagram)
@@ -87,6 +93,7 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 				case SDL_QUIT:
 					running = 0;
 					alive = 0;
+					close = 1;
 					break;
 				case SDL_KEYDOWN:
 					if (grounded) playerJump(&accelerate, gravity);
@@ -170,11 +177,6 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 				case jumpCircle:
 					if ((borderTop || borderBot) && (borderRight) && (spacePressed)) playerJump(&accelerate, gravity);
 					break;
-				case endOfGame:
-					printf("END IS NEAR\n");
-					if (borderTop || borderRight || borderBot) running = 0;
-					break;
-
 			} tmpLL2 = tmpLL2->next;
 		}
 
@@ -207,18 +209,19 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 			// Render all items in LL2
 			tmpLL2 = LL2;
 			while (tmpLL2){
-				renderImage(renderer, tmpLL2->item->texture, tmpLL2->item->posX, tmpLL2->item->posY, BLOCK_SIZE, BLOCK_SIZE, 0);
+				if (tmpLL2->item->type == endOfGame) renderImage(renderer, tmpLL2->item->texture, tmpLL2->item->posX, DEFAULT_floorY, 120, DEFAULT_floorY-70, 0);
+				else renderImage(renderer, tmpLL2->item->texture, tmpLL2->item->posX, tmpLL2->item->posY, BLOCK_SIZE, BLOCK_SIZE, 0);
 				tmpLL2 = tmpLL2->next;
 			}
 
 
 			// Draw particles
 			SDL_SetRenderDrawColor(renderer, 0, 162, 232, 120); // Change drawing color
-			if (!grounded) Ppush(&particle, XPosition - BLOCK_SIZE, YPosition - (10 * gravity));
+			if (!grounded && gravity == 1) Ppush(&particle, XPosition - BLOCK_SIZE, YPosition - 10);
+			else if (!grounded && gravity == -1) Ppush(&particle, XPosition - BLOCK_SIZE, YPosition - BLOCK_SIZE + 10);
 			else Ppush(&particle, 0, 0);
 			particleCount++;
 			Pdraw(renderer, &particle, &particleCount);
-			SDL_SetRenderDrawColor(renderer, 117, 117, 117, 255);
 
 			// Draw and calculate time remaining
 			SDL_SetRenderDrawColor(renderer, 178, 34, 34, 255); // Change drawing color
@@ -232,7 +235,6 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 
 			// Reset drawing color
 			SDL_SetRenderDrawColor(renderer, 117, 117, 117, 255);
-
 
 			// Draw cube at the end
 			renderImage(renderer, cubeTexture, XPosition, YPosition, BLOCK_SIZE, BLOCK_SIZE, (gravity < 0));
@@ -255,5 +257,49 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 
 
 	//* END OF GAME
-	printf("Alive : %d\nRunning : %d\n", alive, running);
+	if (close) return -1;
+	return alive;
+}
+
+
+int gameInterface(SDL_Renderer *renderer, char *mapDir){
+	char res = gameLoop(renderer, mapDir);
+
+	if (res == -1) return -1;
+
+	SDL_Texture *texture = NULL;
+
+	if (res) texture = loadImage(renderer, winIcon);
+	else texture = loadImage(renderer, loseIcon);
+
+	SDL_SetRenderDrawColor(renderer, 117, 117, 117, 100);
+	SDL_Rect rect = {0, 0, 2000, 1200};
+	SDL_RenderFillRect(renderer, &rect);
+	renderImage(renderer, texture, 1000, 750, 250, 250, 0);
+	SDL_SetRenderDrawColor(renderer, 117, 117, 117, 255);
+	SDL_RenderPresent(renderer);
+
+	int running = 1;
+	SDL_Event event;
+	int frameStart;
+	int frameTime;
+	int totalFrames = 0;
+	int frameDelay = 1000 / CAPPED_FPS;
+	int remaining = 120;
+
+	while (running){
+		frameStart = SDL_GetTicks();
+
+		if (totalFrames >= remaining) running = 0;
+
+		while (SDL_PollEvent(&event)){
+			if (event.type == SDL_QUIT) running = 0;
+		}
+
+		frameTime = SDL_GetTicks() - frameStart; // Get delay between start and finish of loop
+		if (frameDelay > frameTime) { SDL_Delay(frameDelay - frameTime); } // Delay the frame if needed
+		totalFrames++; // Add one to total frames
+	}
+
+	return 1;
 }

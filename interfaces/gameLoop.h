@@ -9,13 +9,22 @@
 
 // Functions
 /**
- * @brief Loop each tick, do actions
+ * @brief Main game function, alive while the game is
  * 
  * @param renderer 
  * @param mapDir
+ * @return int 
  */
-void gameLoop(SDL_Renderer *renderer, char *mapDir);
+int gameLoop(SDL_Renderer *renderer, char *mapDir);
 
+/**
+ * @brief Function that starts a game, and wrap it
+ * 
+ * @param renderer 
+ * @param mapDir 
+ * @return int 
+ */
+int gameInterface(SDL_Renderer *renderer, char *mapDir);
 
 
 // Close safety define

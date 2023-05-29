@@ -81,5 +81,22 @@ int playSound(Mix_Music *music);
  */
 int freeSound(Mix_Music *music);
 
+/**
+ * @brief Increase the volume
+ * 
+ * @param volume 
+ * @return int 
+ */
+int volumeUp(int *volume);
+
+/**
+ * @brief Decrease the volume
+ * 
+ * @param volume 
+ * @return int 
+ */
+int volumeDown(int *volume);
+
+
 
 #endif

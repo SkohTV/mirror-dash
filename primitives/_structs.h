@@ -43,6 +43,8 @@ typedef enum _Shape{
 	jumpPadDown = 12,
 	jumpCircle = 13,
 	endOfGame = 70,
+	winIcon = 71,
+	loseIcon = 72,
 	SelectorSkinIcon = 94,
 	SelectorSettingsIcon = 95,
 	SelectorPlayIcon = 96,

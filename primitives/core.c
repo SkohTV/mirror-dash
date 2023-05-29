@@ -39,7 +39,7 @@ int createWindow(SDL_Window **window, SDL_Renderer **renderer){
 
 //! Closes the window
 int closeSDL(SDL_Window *window, SDL_Renderer *renderer){
-	MixQuit(); // Kill audio
+	Mix_Quit(); // Kill audio
 	SDL_DestroyRenderer(renderer); // Kill renderer
 	SDL_DestroyWindow(window); // Kill window
 	SDL_Quit(); // Kill subsystems
@@ -76,6 +76,8 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 			case SelectorPlayIcon: surface = IMG_Load("assets/gui/selectorOnPlayIcon.png") ; break ;
 			case SelectorSettingsIcon: surface = IMG_Load("assets/gui/selectorOnSettingsIcon.png") ; break ;
 			case SelectorSkinIcon: surface = IMG_Load("assets/gui/selectorOnSkinIcon.png") ; break ;
+			case winIcon: surface = IMG_Load("assets/gui/win.png") ; break ;
+			case loseIcon: surface = IMG_Load("assets/gui/lose.png") ; break ;
 		}
 		if (surface == NULL ){
 			fprintf(stderr, "Error: Cannot load file -> %s ", SDL_GetError());
@@ -132,5 +134,21 @@ int playSound(Mix_Music *music){
 
 int freeSound(Mix_Music *music){
 	Mix_FreeMusic(music);
+	return EXIT_SUCCESS;
+}
+
+
+int volumeUp(int *volume){
+	(*volume) += 10;
+	if ((*volume) > 100) (*volume) = 100;
+	Mix_VolumeMusic(volume);
+	return EXIT_SUCCESS;
+}
+
+
+int volumeDown(int *volume){
+	(*volume) -= 10;
+	if ((*volume) < 0) (*volume) = 0;
+	Mix_VolumeMusic(volume);
 	return EXIT_SUCCESS;
 }
