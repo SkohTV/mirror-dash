@@ -8,7 +8,7 @@
 int gameLoop(SDL_Renderer *renderer, char *mapDir, char skin){
 	// Constants
 	int floorY = 8*(WINDOW_HEIGHT/9)+150; // Where floor starts
-	int frameDelay = 1000 / CAPPED_FPS; // Delay between frames
+	Uint32 frameDelay = 1000 / CAPPED_FPS; // Delay between frames
 	int DEFAULT_floorY = floorY; // Static, will never change 
 
 	// Gamestate
@@ -27,7 +27,7 @@ int gameLoop(SDL_Renderer *renderer, char *mapDir, char skin){
 	// Handling
 	SDL_Event event; // Catch events
 	Uint32 frameStart; // Tick of the first frame
-	int frameTime; // Duration between first and last frames
+	Uint32 frameTime; // Duration between first and last frames
 	int totalFrames = 0;
 	int remaining;
 
@@ -42,7 +42,10 @@ int gameLoop(SDL_Renderer *renderer, char *mapDir, char skin){
 	// Loading of first assets
 	SDL_Texture *cubeTexture = loadImage(renderer, skin);
 	SDL_Texture *groundTexture = loadImage(renderer, ground);
-	SDL_Texture *bgTexture = loadImage(renderer, background);
+	SDL_Texture *bgTexture;
+	if (strcmp(mapDir, "assets/maps/first") == 0) bgTexture = loadImage(renderer, background1);
+	else if (strcmp(mapDir, "assets/maps/second") == 0) bgTexture = loadImage(renderer, background2);
+	else if (strcmp(mapDir, "assets/maps/third") == 0) bgTexture = loadImage(renderer, background3);
 
 	// Loading of items assets
 	int end;

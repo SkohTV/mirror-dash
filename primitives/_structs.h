@@ -17,6 +17,7 @@
 // Those will be imported on almost all .h
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
@@ -29,7 +30,6 @@
 // Contain all shapes that can be drawn on renderer
 typedef enum _Shape{
 	cube = 0,
-	background = 1,
 	ground = 2,
 	square = 3,
 	spikeUp = 4,
@@ -45,6 +45,9 @@ typedef enum _Shape{
 	endOfGame = 70,
 	winIcon = 71,
 	loseIcon = 72,
+	background1 = 80,
+	background2 = 81,
+	background3 = 82,
 	skin1 = 91,
 	skin2 = 92,
 	skin3 = 93,

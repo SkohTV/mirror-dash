@@ -33,6 +33,7 @@ int createWindow(SDL_Window **window, SDL_Renderer **renderer){
 		-1,
 		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
 	);
+	SDL_SetRenderDrawBlendMode((*renderer), SDL_BLENDMODE_BLEND);
 	return EXIT_SUCCESS;
 }
 
@@ -55,8 +56,6 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 		return NULL;
 	}	else {
 		switch (shape){ // Load items depending of the choosen shape
-			case cube: surface = IMG_Load("assets/skins/base.png") ; break ;
-			case background: surface = IMG_Load("assets/blocks/background.png") ; break ;
 			case ground: surface = IMG_Load("assets/blocks/ground.png") ; break ;
 			case square: surface = IMG_Load("assets/blocks/square.png") ; break ;
 			case spikeUp: surface = IMG_Load("assets/blocks/spikeUp.png") ; break ;
@@ -78,6 +77,9 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 			case SelectorSkinIcon: surface = IMG_Load("assets/gui/selectorOnSkinIcon.png") ; break ;
 			case winIcon: surface = IMG_Load("assets/gui/win.png") ; break ;
 			case loseIcon: surface = IMG_Load("assets/gui/lose.png") ; break ;
+			case background1: surface = IMG_Load("assets/maps/first/background.png") ; break ;
+			case background2: surface = IMG_Load("assets/maps/second/background.png") ; break ;
+			case background3: surface = IMG_Load("assets/maps/third/background.png") ; break ;
 			case skin1: surface = IMG_Load("assets/skins/skin1.png") ; break ;
 			case skin2: surface = IMG_Load("assets/skins/skin2.png") ; break ;
 			case skin3: surface = IMG_Load("assets/skins/skin3.png") ; break ;
@@ -102,6 +104,11 @@ void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int
 	SDL_Rect dest = { X - W, Y - H, W, H }; // SDL_Rect define the position of the image
 	char flag = flip ? SDL_FLIP_VERTICAL : SDL_FLIP_NONE; // Set flip flag
 	SDL_RenderCopyEx(renderer, texture, NULL, &dest, 0.0, NULL, flag); // Draw texture to renderer
+}
+
+
+void freeTexture(SDL_Texture *texture){
+	SDL_DestroyTexture(texture);
 }
 
 
@@ -144,7 +151,7 @@ int freeSound(Mix_Music *music){
 int volumeUp(int *volume){
 	(*volume) += 10;
 	if ((*volume) > 100) (*volume) = 100;
-	Mix_VolumeMusic(volume);
+	Mix_VolumeMusic((*volume));
 	return EXIT_SUCCESS;
 }
 
@@ -152,6 +159,6 @@ int volumeUp(int *volume){
 int volumeDown(int *volume){
 	(*volume) -= 10;
 	if ((*volume) < 0) (*volume) = 0;
-	Mix_VolumeMusic(volume);
+	Mix_VolumeMusic((*volume));
 	return EXIT_SUCCESS;
 }
