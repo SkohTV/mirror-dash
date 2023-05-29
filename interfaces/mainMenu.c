@@ -1,7 +1,14 @@
 #include "mainMenu.h"
 
 
-void menuState(SDL_Renderer *renderer){
+void menuState(){
+	startSDL();
+	SDL_Window *window = NULL;
+	SDL_Renderer *renderer = NULL;
+	createWindow(&window, &renderer);
+	SDL_SetRenderDrawColor(renderer, 120, 120, 120, 255);
+	SDL_RenderClear(renderer);
+
 	// For background
 	Uint32 frameStart;
 	Uint32 frameTime;
@@ -14,7 +21,8 @@ void menuState(SDL_Renderer *renderer){
 	int skinChoosed = 0;
 	int mapChoosed = 0;
 	int running = 1;
-	int volume = 50;
+	int volume = MIX_MAX_VOLUME / 2;
+	volumeDown(&volume);
 	SDL_Event event;
 
 	// Loading of first assets
@@ -36,7 +44,7 @@ void menuState(SDL_Renderer *renderer){
 	SDL_Texture *currentMap = bgTexture0;
 
 
-	Mix_Music *soundItem = loadSound("assets/maps/first/music.mp3");
+	Mix_Music *soundItem = loadSound("assets/gui/default.mp3");
 	playSound(soundItem);
 
 
@@ -159,4 +167,6 @@ void menuState(SDL_Renderer *renderer){
 	freeTexture(SelectorSquare1);
 	freeTexture(SelectorSquare2);
 	freeTexture(SelectorSquare3);
+
+	closeSDL(window, renderer);
 }

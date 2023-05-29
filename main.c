@@ -1,19 +1,19 @@
 // Includes from ...
-#include "primitives/core.h"
-#include "primitives/linkedList.h"
-
-#include "interfaces/gameLoop.h"
-
-#include "tests/tests.h"
+#include "interfaces/mainMenu.h"
 
 
-int main(int argc, char *argv[]){
-	printf("%d\n", 0 + (0<<1));
-	printf("%d\n", 0 + (1<<1));
-	printf("%d\n", 1 + (0<<1));
-	printf("%d\n", 1 + (1<<1));
+
+int main(){
+	menuState();
+	return EXIT_SUCCESS;
+}
 
 
+
+
+//!Finalized version doesn't have access to tests
+/*
+//int main(int argc, char *argv[]){
 	// CLI ARGUMENTS
 	for (int i = 0 ; i < argc ; i++){
 		switch (argv[i][0]){
@@ -25,7 +25,5 @@ int main(int argc, char *argv[]){
 
 	// DEFAULT RUN WITHOUT ARGUMENTS
 	if (argc == 1){ }
-
-	// EXIT
-	return EXIT_SUCCESS;
 }
+*/

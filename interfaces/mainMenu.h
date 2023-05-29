@@ -10,11 +10,11 @@
 
 
 // Functions
-/***/
-
+/**
+ * @brief Main function that wraps the whole application
+ * 
+ */
 void menuState();
-
-void test();
 
 
 

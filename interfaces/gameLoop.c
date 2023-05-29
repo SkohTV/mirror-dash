@@ -216,9 +216,12 @@ int gameLoop(SDL_Renderer *renderer, char *mapDir, char skin){
 				tmpLL2 = tmpLL2->next;
 			}
 
+			// Change drawing color
+			if (skin == skin1) SDL_SetRenderDrawColor(renderer, 68, 139, 10, 120);
+			else if (skin == skin2) SDL_SetRenderDrawColor(renderer, 197, 69, 10, 120);
+			else if (skin == skin3) SDL_SetRenderDrawColor(renderer, 0, 162, 232, 120);
 
 			// Draw particles
-			SDL_SetRenderDrawColor(renderer, 0, 162, 232, 120); // Change drawing color
 			if (!grounded && gravity == 1) Ppush(&particle, XPosition - BLOCK_SIZE, YPosition - 10);
 			else if (!grounded && gravity == -1) Ppush(&particle, XPosition - BLOCK_SIZE, YPosition - BLOCK_SIZE + 10);
 			else Ppush(&particle, 0, 0);

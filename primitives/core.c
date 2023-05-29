@@ -149,15 +149,15 @@ int freeSound(Mix_Music *music){
 
 
 int volumeUp(int *volume){
-	(*volume) += 10;
-	if ((*volume) > 100) (*volume) = 100;
+	(*volume) += 2;
+	if ((*volume) > MIX_MAX_VOLUME) (*volume) = MIX_MAX_VOLUME;
 	Mix_VolumeMusic((*volume));
 	return EXIT_SUCCESS;
 }
 
 
 int volumeDown(int *volume){
-	(*volume) -= 10;
+	(*volume) -= 2;
 	if ((*volume) < 0) (*volume) = 0;
 	Mix_VolumeMusic((*volume));
 	return EXIT_SUCCESS;
