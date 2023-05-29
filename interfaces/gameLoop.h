@@ -13,18 +13,20 @@
  * 
  * @param renderer 
  * @param mapDir
+ * @param skin
  * @return int 
  */
-int gameLoop(SDL_Renderer *renderer, char *mapDir);
+int gameLoop(SDL_Renderer *renderer, char *mapDir, char skin);
 
 /**
  * @brief Function that starts a game, and wrap it
  * 
  * @param renderer 
  * @param mapDir 
+ * @param skin
  * @return int 
  */
-int gameInterface(SDL_Renderer *renderer, char *mapDir);
+int gameInterface(SDL_Renderer *renderer, char *mapDir, char skin);
 
 
 // Close safety define

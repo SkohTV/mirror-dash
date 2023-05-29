@@ -5,7 +5,7 @@
 #include "../primitives/particles.h"
 
 
-int gameLoop(SDL_Renderer *renderer, char *mapDir){
+int gameLoop(SDL_Renderer *renderer, char *mapDir, char skin){
 	// Constants
 	int floorY = 8*(WINDOW_HEIGHT/9)+150; // Where floor starts
 	int frameDelay = 1000 / CAPPED_FPS; // Delay between frames
@@ -40,7 +40,7 @@ int gameLoop(SDL_Renderer *renderer, char *mapDir){
 	free(levelFileUrl);
 
 	// Loading of first assets
-	SDL_Texture *cubeTexture = loadImage(renderer, cube);
+	SDL_Texture *cubeTexture = loadImage(renderer, skin);
 	SDL_Texture *groundTexture = loadImage(renderer, ground);
 	SDL_Texture *bgTexture = loadImage(renderer, background);
 
@@ -72,7 +72,6 @@ int gameLoop(SDL_Renderer *renderer, char *mapDir){
 
 		if (totalFrames >= end){
 			running = 0;
-			break;
 		}
 
 		// If summon time, then pass to next list and check next item
@@ -225,12 +224,12 @@ int gameLoop(SDL_Renderer *renderer, char *mapDir){
 
 			// Draw and calculate time remaining
 			SDL_SetRenderDrawColor(renderer, 178, 34, 34, 255); // Change drawing color
-			remaining = (totalFrames * 500 / end);
-			SDL_Rect rect = {500, 25, 500, 20}; // Red bar
+			remaining = (totalFrames * 500 / end) + 1;
+			SDL_Rect rect = {500, 15, 500, 20}; // Red bar
 			SDL_RenderFillRect(renderer, &rect);
 
 			SDL_SetRenderDrawColor(renderer, 129, 182, 34, 255); // Change drawing color
-			SDL_Rect rect2 = {500, 25, remaining, 20}; // Green bar
+			SDL_Rect rect2 = {500, 15, remaining, 20}; // Green bar
 			SDL_RenderFillRect(renderer, &rect2);
 
 			// Reset drawing color
@@ -257,13 +256,14 @@ int gameLoop(SDL_Renderer *renderer, char *mapDir){
 
 
 	//* END OF GAME
+	freeSound(soundItem);
 	if (close) return -1;
 	return alive;
 }
 
 
-int gameInterface(SDL_Renderer *renderer, char *mapDir){
-	char res = gameLoop(renderer, mapDir);
+int gameInterface(SDL_Renderer *renderer, char *mapDir, char skin){
+	char res = gameLoop(renderer, mapDir, skin);
 
 	if (res == -1) return -1;
 
@@ -275,7 +275,7 @@ int gameInterface(SDL_Renderer *renderer, char *mapDir){
 	SDL_SetRenderDrawColor(renderer, 117, 117, 117, 100);
 	SDL_Rect rect = {0, 0, 2000, 1200};
 	SDL_RenderFillRect(renderer, &rect);
-	renderImage(renderer, texture, 1000, 750, 250, 250, 0);
+	renderImage(renderer, texture, 1000, 650, 500, 500, 0);
 	SDL_SetRenderDrawColor(renderer, 117, 117, 117, 255);
 	SDL_RenderPresent(renderer);
 

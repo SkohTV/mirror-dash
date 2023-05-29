@@ -26,7 +26,7 @@ int testCore(){
 	initSound();
 	SDL_RenderClear(renderer);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-	gameInterface(renderer, "assets/maps/tuto-first");
+	gameInterface(renderer, "assets/maps/tuto-first", cube);
 	closeSDL(window, renderer);
 	return EXIT_SUCCESS;
 }
@@ -78,7 +78,7 @@ int testFirstLevel(){
 	createWindow(&window, &renderer);
 	SDL_SetRenderDrawColor(renderer, 120, 120, 120, 255);
 	SDL_RenderClear(renderer);
-	gameLoop(renderer, "assets/maps/tuto-first");
+	gameLoop(renderer, "assets/maps/tuto-first", cube);
 	closeSDL(window, renderer);
 	return EXIT_SUCCESS;
 }
