@@ -69,6 +69,7 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape){
 			case jumpPadUp: surface = IMG_Load("assets/blocks/jumpPadUp.png") ; break ;
 			case jumpPadDown: surface = IMG_Load("assets/blocks/jumpPadDown.png") ; break ;
 			case jumpCircle: surface = IMG_Load("assets/blocks/jumpCircle.png") ; break ;
+			case endOfGame: surface = IMG_Load("assets/blocks/endBar.png") ; break ;
 			case playIcon: surface = IMG_Load("assets/gui/menu_playIcon.png") ; break ;
 			case settingsIcon: surface = IMG_Load("assets/gui/menu_settingsIcon.png") ; break ;
 			case skinIcon: surface = IMG_Load("assets/gui/menu_skinIcon.png") ; break ;
@@ -120,6 +121,7 @@ int initSound(){
 Mix_Music *loadSound(char *path){
 	Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
 	Mix_Music *music = Mix_LoadMUS(path);
+	Mix_CloseAudio();
 	return music;
 }
 

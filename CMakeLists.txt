@@ -26,12 +26,12 @@ foreach(SOURCE ${SOURCES})
 
 	# Exclude any banned files from the list of sources
 	foreach(BANNED_FILE ${BANNED})
-		list(REMOVE_ITEM SOURCES_LIST_${SOURCE} "${SOURCE}/${BANNED_FILE}.c")
-		list(REMOVE_ITEM SOURCES_LIST_${SOURCE} "${SOURCE}/${BANNED_FILE}.h")
+		list(FILTER SOURCES_LIST_${SOURCE} EXCLUDE REGEX "${BANNED_FILE}.*\\.c$|${BANNED_FILE}.*\\.h$")
 	endforeach()
 
 	list(APPEND SOURCES_LIST ${SOURCES_LIST_${SOURCE}})
 endforeach()
+
 
 # Create the executable
 add_executable(MyExecutable ${SOURCES_LIST} main.c)

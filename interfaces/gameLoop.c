@@ -28,6 +28,7 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 	Uint32 frameStart; // Tick of the first frame
 	int frameTime; // Duration between first and last frames
 	int totalFrames = 0;
+	int remaining;
 
 	// Init of future (LL1) and alive (LL2) items
 	char *levelFileUrl = malloc(strlen(mapDir) + strlen("map.level") + 1);
@@ -43,19 +44,17 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 	SDL_Texture *bgTexture = loadImage(renderer, background);
 
 	// Loading of items assets
+	int end;
 	tmpLL2 = LL1;
 	while (tmpLL2){
 		tmpLL2->item->texture = loadImage(renderer, tmpLL2->item->type);
+		end = tmpLL2->item->summon + 87; // 87 is frames between summon time and collision
 		tmpLL2 = tmpLL2->next;
-	}
+	} printf("End: %d\n", end);
 
 	// Linked List for particles
 	ItemParticle *particle = NULL;
 	int particleCount = 0;
-	//for (int i = 0; i < 10 ; i++){
-	//	Ppush(&particle, i*10, i*10);
-	//	particleCount++;
-	//}
 
 
 	// Init the sound
@@ -86,9 +85,11 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 		while (SDL_PollEvent(&event)){ // Event Handling
 			switch (event.type){
 				case SDL_QUIT:
-					running = 0 ; break;
+					running = 0;
+					alive = 0;
+					break;
 				case SDL_KEYDOWN:
-					if (grounded){ playerJump(&accelerate, gravity); }
+					if (grounded) playerJump(&accelerate, gravity);
 					spacePressed = 1;
 					break;
 			}
@@ -153,21 +154,26 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 				case spikeDown:
 				case spikeLeft:
 				case spikeRight:
-					if (borderTop || borderRight || borderBot){ alive = 0; }
+					if (borderTop || borderRight || borderBot) alive = 0;
 					break;
 				case gravityPadUp:
-					if (lowBorderTop && lowHeightBorderRight){ reverseGravity(&gravity, &floorY, &accelerate, &grounded); }
+				case gravityPadDown:
+					if (lowBorderTop && lowHeightBorderRight) reverseGravity(&gravity, &floorY, &accelerate, &grounded);
 					break;
 				case gravityCircle:
-					if ((borderTop || borderBot) && (borderRight) && (spacePressed)){ reverseGravity(&gravity, &floorY, &accelerate, &grounded); }
+					if ((borderTop || borderBot) && (borderRight) && (spacePressed)) reverseGravity(&gravity, &floorY, &accelerate, &grounded);
 					break;
 				case jumpPadUp:
-					if (lowBorderTop && lowHeightBorderRight){ playerJump(&accelerate, gravity); }
+				case jumpPadDown:
+					if (lowBorderTop && lowHeightBorderRight) playerJump(&accelerate, gravity);
 					break;
 				case jumpCircle:
-					if ((borderTop || borderBot) && (borderRight) && (spacePressed)){ playerJump(&accelerate, gravity); }
+					if ((borderTop || borderBot) && (borderRight) && (spacePressed)) playerJump(&accelerate, gravity);
 					break;
-				//case endOfGame:
+				case endOfGame:
+					printf("END IS NEAR\n");
+					if (borderTop || borderRight || borderBot) running = 0;
+					break;
 
 			} tmpLL2 = tmpLL2->next;
 		}
@@ -207,12 +213,26 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 
 
 			// Draw particles
-			SDL_SetRenderDrawColor(renderer, 0, 162, 232, 120);
+			SDL_SetRenderDrawColor(renderer, 0, 162, 232, 120); // Change drawing color
 			if (!grounded) Ppush(&particle, XPosition - BLOCK_SIZE, YPosition - (10 * gravity));
 			else Ppush(&particle, 0, 0);
 			particleCount++;
 			Pdraw(renderer, &particle, &particleCount);
 			SDL_SetRenderDrawColor(renderer, 117, 117, 117, 255);
+
+			// Draw and calculate time remaining
+			SDL_SetRenderDrawColor(renderer, 178, 34, 34, 255); // Change drawing color
+			remaining = (totalFrames * 500 / end);
+			SDL_Rect rect = {500, 25, 500, 20}; // Red bar
+			SDL_RenderFillRect(renderer, &rect);
+
+			SDL_SetRenderDrawColor(renderer, 129, 182, 34, 255); // Change drawing color
+			SDL_Rect rect2 = {500, 25, remaining, 20}; // Green bar
+			SDL_RenderFillRect(renderer, &rect2);
+
+			// Reset drawing color
+			SDL_SetRenderDrawColor(renderer, 117, 117, 117, 255);
+
 
 			// Draw cube at the end
 			renderImage(renderer, cubeTexture, XPosition, YPosition, BLOCK_SIZE, BLOCK_SIZE, (gravity < 0));
@@ -236,5 +256,4 @@ void gameLoop(SDL_Renderer *renderer, char *mapDir){
 
 	//* END OF GAME
 	printf("Alive : %d\nRunning : %d\n", alive, running);
-
 }

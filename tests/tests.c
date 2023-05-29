@@ -27,6 +27,7 @@ int testCore(){
 	SDL_RenderClear(renderer);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	gameLoop(renderer, "assets/maps/tuto-first");
+	closeSDL(window, renderer);
 	return EXIT_SUCCESS;
 }
 
@@ -85,9 +86,10 @@ int testFirstLevel(){
 
 int testSound(){
 	initSound();
-
-	loadSound("assets/maps/tuto-first/music.mp3");
-	
+	Mix_Music *music = loadSound("assets/maps/tuto-first/music.mp3");
+	playSound(music);
+	SDL_Delay(5000);
+	freeSound(music);
 	SDL_Quit();
 	return 0;
 }

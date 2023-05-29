@@ -6,21 +6,6 @@
 void createFile(){
 	FILE *fp = fopen("map.level", "w");
 
-	//// Obj 1
-	//putc(square, fp);
-	//putw(640, fp);
-	//putw(180, fp);
-
-	//// Obj 2
-	//putc(square, fp);
-	//putw(450, fp);
-	//putw(360, fp);
-
-	//// Obj 3
-	//putc(spikeUp, fp);
-	//putw(540, fp);
-	//putw(540, fp);
-
 	// Obj 4
 	putc(gravityPadUp, fp);
 	putw(790, fp);
@@ -55,6 +40,16 @@ void createFile(){
 	putc(jumpCircle, fp);
 	putw(540, fp);
 	putw(560, fp);
+
+	// Obj 7
+	putc(jumpCircle, fp);
+	putw(540, fp);
+	putw(560, fp);
+
+	// End
+	putc(endOfGame, fp);
+	putw(790, fp);
+	putw(600, fp);
 
 	fclose(fp);
 }
