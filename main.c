@@ -1,9 +1,12 @@
 // Includes from ...
 #include "interfaces/mainMenu.h"
-
+#include "primitives/fileCreator.h"
 
 
 int main(){
+	createFile1();
+	createFile2();
+	createFile3();
 	menuState();
 	return EXIT_SUCCESS;
 }

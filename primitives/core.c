@@ -143,6 +143,7 @@ int playSound(Mix_Music *music){
 
 
 int freeSound(Mix_Music *music){
+	Mix_HaltMusic();
 	Mix_FreeMusic(music);
 	return EXIT_SUCCESS;
 }

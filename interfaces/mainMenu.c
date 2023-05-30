@@ -75,7 +75,7 @@ void menuState(){
 							case 0: gameInterface(renderer, "assets/maps/first", tmpSkin) ; break ;
 							case 1: gameInterface(renderer, "assets/maps/second", tmpSkin) ; break ;
 							case 2: gameInterface(renderer, "assets/maps/third", tmpSkin) ; break ;
-						}
+						} SDL_Delay(300);
 						soundItem = loadSound("assets/gui/default.mp3");
 						playSound(soundItem);
 					} break;

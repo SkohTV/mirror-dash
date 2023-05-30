@@ -270,6 +270,8 @@ int gameLoop(SDL_Renderer *renderer, char *mapDir, char skin){
 
 
 int gameInterface(SDL_Renderer *renderer, char *mapDir, char skin){
+	SDL_Delay(300);
+
 	char res = gameLoop(renderer, mapDir, skin);
 
 	if (res == -1) return -1;
