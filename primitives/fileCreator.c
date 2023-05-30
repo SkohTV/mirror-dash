@@ -203,8 +203,16 @@ void createFile2(){
 	putw(650, fp);
 	putw(140, fp);
 
+	putc(jumpCircle, fp);
+	putw(450, fp);
+	putw(140, fp);
+
 	putc(square, fp);
 	putw(650, fp);
+	putw(150, fp);
+
+	putc(spikeUp, fp);
+	putw(570, fp);
 	putw(150, fp);
 
 	putc(square, fp);
@@ -217,16 +225,191 @@ void createFile2(){
 
 	putc(gravityPadUp, fp);
 	putw(790, fp);
-	putw(180, fp);
+	putw(200, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(230, fp);
 
 	putc(gravityCircle, fp);
 	putw(370, fp);
-	putw(210, fp);
+	putw(230, fp);
 
+	putc(spikeDown, fp);
+	putw(150, fp);
+	putw(230, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(240, fp);
+
+	putc(spikeDown, fp);
+	putw(150, fp);
+	putw(240, fp);
+
+	putc(spikeDown, fp);
+	putw(150, fp);
+	putw(250, fp);
+
+	putc(spikeLeft, fp);
+	putw(700, fp);
+	putw(280, fp);
+
+	putc(square, fp);
+	putw(700, fp);
+	putw(290, fp);
+
+	putc(spikeUp, fp);
+	putw(620, fp);
+	putw(290, fp);
+
+	putc(square, fp);
+	putw(700, fp);
+	putw(300, fp);
+
+	putc(spikeUp, fp);
+	putw(620, fp);
+	putw(300, fp);
+
+	putc(square, fp);
+	putw(700, fp);
+	putw(310, fp);
+
+	putc(spikeUp, fp);
+	putw(620, fp);
+	putw(310, fp);
+
+	putc(jumpCircle, fp);
+	putw(650, fp);
+	putw(325, fp);
+
+	putc(square, fp);
+	putw(700, fp);
+	putw(340, fp);
+
+	putc(spikeDown, fp);
+	putw(780, fp);
+	putw(340, fp);
+
+	putc(square, fp);
+	putw(700, fp);
+	putw(350, fp);
+
+	putc(square, fp);
+	putw(700, fp);
+	putw(360, fp);
+
+	putc(square, fp);
+	putw(700, fp);
+	putw(370, fp);
+
+	putc(square, fp);
+	putw(700, fp);
+	putw(380, fp);
+
+	putc(square, fp);
+	putw(700, fp);
+	putw(390, fp);
+
+	putc(spikeLeft, fp);
+	putw(620, fp);
+	putw(390, fp);
+
+	putc(square, fp);
+	putw(620, fp);
+	putw(400, fp);
+
+	putc(square, fp);
+	putw(620, fp);
+	putw(410, fp);
+
+	putc(square, fp);
+	putw(620, fp);
+	putw(420, fp);
+
+	putc(square, fp);
+	putw(620, fp);
+	putw(430, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(440, fp);
+
+	putc(square, fp);
+	putw(620, fp);
+	putw(440, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(450, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(460, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(470, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(480, fp);
+
+	putc(jumpCircle, fp);
+	putw(620, fp);
+	putw(480, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(490, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(500, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(510, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(520, fp);
+
+	putc(square, fp);
+	putw(620, fp);
+	putw(520, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(530, fp);
+
+	putc(square, fp);
+	putw(620, fp);
+	putw(530, fp);
+
+	putc(square, fp);
+	putw(620, fp);
+	putw(540, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(550, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(560, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(570, fp);
+
+	putc(spikeUp, fp);
+	putw(790, fp);
+	putw(580, fp);
 
 	putc(endOfGame, fp);
 	putw(790, fp);
-	putw(1760, fp);
+	putw(600, fp);
 
 
 	fclose(fp);

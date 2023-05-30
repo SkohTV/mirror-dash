@@ -4,8 +4,8 @@
 
 
 int main(){
-	createFile1();
-	createFile2();
+	//createFile1();
+	//createFile2();
 	createFile3();
 	menuState();
 	return EXIT_SUCCESS;

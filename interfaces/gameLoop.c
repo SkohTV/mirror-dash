@@ -203,11 +203,9 @@ int gameLoop(SDL_Renderer *renderer, char *mapDir, char skin){
 			// Clear renderer
 			SDL_RenderClear(renderer);
 
-			// Render default assets (bg, cube...)
+			// Render background
 			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560), DEFAULT_floorY, 2560, 720, 0);
 			renderImage(renderer, bgTexture, (WINDOW_WIDTH + 300 - totalFrames % 2560 + 2560), DEFAULT_floorY, 2560, 720, 0);
-			renderImage(renderer, groundTexture, WINDOW_WIDTH+300, DEFAULT_floorY+300, WINDOW_WIDTH+300, 300, 0);
-			renderImage(renderer, groundTexture, WINDOW_WIDTH+300, 70, WINDOW_WIDTH+300, 300, 1);
 
 			// Render all items in LL2
 			tmpLL2 = LL2;
@@ -228,6 +226,10 @@ int gameLoop(SDL_Renderer *renderer, char *mapDir, char skin){
 			else Ppush(&particle, 0, 0);
 			particleCount++;
 			Pdraw(renderer, &particle, &particleCount);
+
+			// Draw ground
+			renderImage(renderer, groundTexture, WINDOW_WIDTH+300, DEFAULT_floorY+300, WINDOW_WIDTH+300, 300, 0);
+			renderImage(renderer, groundTexture, WINDOW_WIDTH+300, 70, WINDOW_WIDTH+300, 300, 1);
 
 			// Draw and calculate time remaining
 			SDL_SetRenderDrawColor(renderer, 178, 34, 34, 255); // Change drawing color
