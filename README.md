@@ -4,12 +4,12 @@
 ## Cahier des charges
 
 ### Ecran principal - [Robin](https://github.com/mkkuu)
-- [ ] Bouton play
-- [ ] Écran de niveaux (Petit descriptif des niveaux + choix)
-- [ ] Skins (+ traînée / skins premium)
-- [ ] Changement du volume
-- [ ] Faux gameplay en background
-- [ ] Sélection via les touches directionnelles
+- [x] Bouton play
+- [x] Bouton de niveaux
+- [x] Skins (+ traînée / skins premium)
+- [x] Changement du volume
+- [x] Faux gameplay en background
+- [x] Sélection via les touches directionnelles
 
 ### Niveaux - [Noé](https://github.com/SkohTV)
 - [x] L’arrière plan scroll, le cube reste fixe horizontalement, pas verticalement

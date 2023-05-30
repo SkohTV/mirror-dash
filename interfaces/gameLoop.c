@@ -52,7 +52,7 @@ int gameLoop(SDL_Renderer *renderer, char *mapDir, char skin){
 	tmpLL2 = LL1;
 	while (tmpLL2){
 		tmpLL2->item->texture = loadImage(renderer, tmpLL2->item->type);
-		end = tmpLL2->item->summon + 104; // 100 is frames between summon time and collision
+		end = tmpLL2->item->summon + 104; // 104 is frames between summon time and collision
 		tmpLL2 = tmpLL2->next;
 	}
 
@@ -66,6 +66,7 @@ int gameLoop(SDL_Renderer *renderer, char *mapDir, char skin){
 	sprintf(soundFileUrl, "%s/music.mp3", mapDir);
 	Mix_Music *soundItem = loadSound(soundFileUrl);
 	playSound(soundItem);
+	free(soundFileUrl);
 
 
 

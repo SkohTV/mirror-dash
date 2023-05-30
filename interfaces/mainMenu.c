@@ -43,7 +43,6 @@ void menuState(){
 	SDL_Texture *currentSkin = cubeTexture0;
 	SDL_Texture *currentMap = bgTexture0;
 
-
 	Mix_Music *soundItem = loadSound("assets/gui/default.mp3");
 	playSound(soundItem);
 
@@ -69,7 +68,6 @@ void menuState(){
 
 			switch(event.key.keysym.sym){
 				case SDLK_SPACE:
-					printf("a\n");
 					if (posSelectorSquare==1){
 						freeSound(soundItem);
 						char tmpSkin = !skinChoosed ? skin1 : skinChoosed==1 ? skin2 : skin3;

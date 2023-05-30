@@ -5,7 +5,7 @@ project(MyProject)
 set(SOURCES
 	primitives
 	interfaces
-	tests
+	#tests
 )
 
 # List of banned filenames (without extensions)

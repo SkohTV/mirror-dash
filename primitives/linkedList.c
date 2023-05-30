@@ -1,7 +1,7 @@
 #include "linkedList.h"
 
 
-//? We are creating a QUEUE, so we push at start and pop at end
+//? We are creating a QUEUE, so we push at end and pop at start
 //? A new list is always just NULL
 void LLpush(LinkedList **list, ItemEntity *item){
 	if (*list == NULL){
