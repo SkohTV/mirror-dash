@@ -4,9 +4,6 @@
 
 
 int main(){
-	//createFile1();
-	//createFile2();
-	createFile3();
 	menuState();
 	return EXIT_SUCCESS;
 }
@@ -17,6 +14,11 @@ int main(){
 //!Finalized version doesn't have access to tests
 /*
 //int main(int argc, char *argv[]){
+	// REBUILD LEVELS
+	createFile1();
+	createFile2();
+	createFile3();
+
 	// CLI ARGUMENTS
 	for (int i = 0 ; i < argc ; i++){
 		switch (argv[i][0]){
