@@ -21,7 +21,7 @@
 void testsRun(char testName);
 
 /**
- * @brief 
+ * @brief Test for the Core functionnalities
  * 
  * @return int 
  */

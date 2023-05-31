@@ -53,7 +53,7 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, char shape);
 void renderImage(SDL_Renderer *renderer ,SDL_Texture *texture, int X, int Y, int W, int H, char flip);
 
 /**
- * @brief 
+ * @brief Free the texture object
  * 
  * @param texture 
  */
@@ -62,6 +62,7 @@ void freeTexture(SDL_Texture *texture);
 /**
  * @brief Init the sound engine
  * 
+ * @return int
  */
 int initSound();
 

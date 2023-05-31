@@ -8,7 +8,7 @@
 
 // Functions
 /**
- * @brief Return the plus or minus to the X position of the cube
+ * @brief Return the plus or minus to the X position of the cube (with return)
  * 
  * @param accelerate 
  * @return int 
@@ -16,7 +16,7 @@
 int jumpTrajectory(int *accelerate, char gravity);
 
 /**
- * @brief 
+ * @brief Return the plus or minus to the Y position of the cube (in place)
  * 
  * @param accelerate 
  * @param gravity 
@@ -25,7 +25,7 @@ void playerJump(int *accelerate, char gravity);
 
 //! OTHERS PARAMS TO PASS INTO
 /**
- * @brief 
+ * @brief Return the plus or minus to the Y position of the cube
  * 
  * @param gravity 
  * @param floorY 

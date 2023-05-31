@@ -20,19 +20,19 @@
 LinkedList *readFile(char *dir);
 
 /**
- * @brief Create a File1 object
+ * @brief Build first level
  * 
  */
 void createFile1();
 
 /**
- * @brief Create a File2 object
+ * @brief Build second level
  * 
  */
 void createFile2();
 
 /**
- * @brief Create a File3 object
+ * @brief Build third level
  * 
  */
 void createFile3();
