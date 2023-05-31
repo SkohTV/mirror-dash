@@ -34,9 +34,9 @@ LinkedList *readFile(char *dir){
 
 
 
-// DO NO GO BELOW THIS POINT
-// Pls, I am ashamed
-
+//* PLS, do NOT read ANYTHING under this line
+//* Only darkness awaits down below...
+// (Thoses functions will never be called, their sole purpose is to build levels)
 
 
 //! Manual creation of level
