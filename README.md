@@ -64,7 +64,6 @@ Ainsi que des librairies :
 - <SDL2/SDL.h> (`sudo apt-get install libsdl2-dev`)
 - <SDL2/SDL_image.h> (`sudo apt-get install libsdl2-image-dev`)
 - <SDL2/SDL_mixer.h> (`sudo apt-get install libsdl2-mixer-dev`)
-- <SDL2/SDL_ttf.h> (`sudo apt-get install libsdl2-ttf-dev`)
 
 Puis lancer le fichier `make.sh`, il s'occupe de tout
 
